@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>แพลนเที่ยว เชียงใหม่ - ลำพูน (วันที่ 26 - 29 พฤศจิกายน 2026)</title>
-    <!-- Tailwind CSS -->
+    <title>แพลนเที่ยว เชียงใหม่ - ลำพูน 4 วัน 3 คืน (วันที่ 26 - 29 พฤศจิกายน 2026)</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Prompt & Mali -->
+    <!-- Google Fonts: Mali (Headings) & Prompt (Body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
                     },
                     colors: {
                         cream: '#FDFBF7',
-                        sage: {
+                        matcha: {
                             bg: '#E6F4EA',
                             border: '#C8E6C9',
                             text: '#2E7D32'
@@ -59,44 +59,55 @@
             font-family: 'Prompt', sans-serif;
             background-color: #FDFBF7;
             color: #334155;
-            line-height: 1.7;
+            line-height: 1.75;
+            overflow-x: hidden;
         }
         .font-cute {
             font-family: 'Mali', 'Prompt', sans-serif;
         }
-        /* Cute Polka Dot Subtle Pattern */
-        .pastel-pattern {
+        /* Subtle Kawaii Polka Dot Background */
+        .pastel-dots {
             background-color: #FDFBF7;
-            background-image: radial-gradient(#E2E8F0 1.2px, transparent 1.2px), radial-gradient(#FDE68A 1.2px, #FDFBF7 1.2px);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
+            background-image:
+                radial-gradient(#E2E8F0 1.2px, transparent 1.2px),
+                radial-gradient(#FDE68A 1.2px, #FDFBF7 1.2px);
+            background-size: 42px 42px;
+            background-position: 0 0, 21px 21px;
         }
-        /* Card Soft Shadow */
+        /* Soft Minimal Pastel Card */
         .cute-card {
             background-color: #FFFFFF;
             border-radius: 1.75rem;
-            box-shadow: 0 10px 30px -10px rgba(148, 163, 184, 0.15);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 10px 28px -10px rgba(148, 163, 184, 0.16);
+            transition: box-shadow 0.25s ease;
         }
         .cute-card:hover {
-            box-shadow: 0 14px 35px -10px rgba(148, 163, 184, 0.24);
+            box-shadow: 0 14px 34px -10px rgba(148, 163, 184, 0.24);
         }
-        /* Completed State Styling */
+        /* Completed Checkbox Visual State */
         .task-done .task-title {
             text-decoration: line-through;
             color: #94A3B8;
         }
-        .task-done .task-content {
+        .task-done .task-body {
             opacity: 0.65;
         }
-        /* Floating Animation for Cute SVG Icons */
-        @keyframes floatSlow {
+        /* Gentle Floating Animation */
+        @keyframes floatSoft {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-5px); }
         }
         .animate-float {
-            animation: floatSlow 3.5s ease-in-out infinite;
+            animation: floatSoft 3.6s ease-in-out infinite;
         }
+        /* Bottom Sheet Slide Animation */
+        .sheet-backdrop {
+            transition: opacity 0.28s ease;
+        }
+        .sheet-panel {
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        /* Print Styles */
         @media print {
             .no-print {
                 display: none !important;
@@ -106,541 +117,705 @@
             }
             .cute-card {
                 box-shadow: none !important;
-                border: 1px solid #E2E8F0 !important;
+                border: 1px solid #CBD5E1 !important;
                 break-inside: avoid;
             }
         }
     </style>
 </head>
-<body class="min-h-screen pb-24 pastel-pattern selection:bg-amber-200 selection:text-amber-900">
+<body class="min-h-screen pb-28 pastel-dots selection:bg-amber-200 selection:text-amber-900">
 
-    <!-- Cute Toast Notification Popup -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none bg-slate-800 text-white px-5 py-3.5 rounded-full shadow-2xl flex items-center gap-3 text-sm font-medium border-2 border-white">
-        <span class="w-7 h-7 rounded-full bg-emerald-400 text-slate-900 flex items-center justify-center text-xs font-bold">
+    <!-- =================================================================== -->
+    <!-- TOAST NOTIFICATION (NON-INTRUSIVE COPY & STATUS FEEDBACK)           -->
+    <!-- =================================================================== -->
+    <div id="toast" role="status" aria-live="polite" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none bg-slate-800 text-white px-5 py-3 rounded-full shadow-2xl flex items-center gap-3 text-xs sm:text-sm font-medium border-2 border-white max-w-[92vw]">
+        <span class="w-6 h-6 rounded-full bg-emerald-400 text-slate-900 flex items-center justify-center text-xs font-bold shrink-0">
             <i class="fa-solid fa-check"></i>
         </span>
         <span id="toast-msg" class="font-cute font-semibold">คัดลอกข้อมูลเรียบร้อยแล้วค่ะ!</span>
     </div>
 
-    <!-- Custom Reset Modal (No browser confirm/alert) -->
-    <div id="reset-modal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs hidden items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-7 shadow-2xl border-2 border-rose-100 text-center">
-            <div class="w-16 h-16 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center text-2xl mb-4 mx-auto border-2 border-rose-100">
+    <!-- =================================================================== -->
+    <!-- CUSTOM RESET CONFIRMATION MODAL (NO BROWSER ALERT/CONFIRM)          -->
+    <!-- =================================================================== -->
+    <div id="reset-modal" class="fixed inset-0 z-[60] bg-slate-900/45 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border-2 border-rose-100 text-center">
+            <div class="w-16 h-16 rounded-full bg-rose-50 text-3xl flex items-center justify-center mb-4 mx-auto border-2 border-rose-100">
                 🧸
             </div>
-            <h3 class="text-xl font-bold text-slate-800 font-cute mb-2">ต้องการล้างเช็กลิสต์เริ่มต้นใหม่ไหมคะ?</h3>
+            <h3 class="text-xl font-bold text-slate-800 font-cute mb-2">
+                ต้องการล้างเช็กลิสต์เริ่มต้นใหม่ใช่ไหมคะ?
+            </h3>
             <p class="text-sm text-slate-600 mb-6 leading-relaxed">
-                รายการเตรียมตัวและสถานที่ท่องเที่ยวที่คุณติ๊กเครื่องหมายถูกไว้จะถูกรีเซ็ตกลับเป็นค่าเริ่มต้นทั้งหมดค่ะ
+                รายการเตรียมตัวก่อนเดินทางและสถานที่ท่องเที่ยวทั้งหมดที่คุณติ๊กเครื่องหมายถูกไว้จะถูกรีเซ็ตกลับเป็นค่าเริ่มต้นค่ะ
             </p>
             <div class="flex gap-3">
-                <button onclick="closeResetModal()" class="flex-1 py-3 px-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition cursor-pointer">
+                <button type="button" onclick="closeResetModal()" class="flex-1 py-3 px-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition cursor-pointer">
                     เก็บไว้เหมือนเดิม
                 </button>
-                <button onclick="confirmResetProgress()" class="flex-1 py-3 px-4 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-semibold text-sm shadow-md shadow-rose-500/20 transition cursor-pointer">
+                <button type="button" onclick="confirmResetProgress()" class="flex-1 py-3 px-4 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-semibold text-sm shadow-md shadow-rose-500/20 transition cursor-pointer">
                     ยืนยันการรีเซ็ต
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- HERO HEADER: Clean Pastel Kawaii Banner -->
-    <header class="relative overflow-hidden pt-8 pb-6 px-4">
+    <!-- =================================================================== -->
+    <!-- FLOATING ACTION BUTTON (FAB) - BOTTOM RIGHT ONLY (NO TOP STICKY)    -->
+    <!-- =================================================================== -->
+    <button type="button" id="fab-menu-btn" onclick="openBottomSheet()" aria-label="เปิดเมนูนำทางทริป" class="no-print fixed bottom-5 right-5 z-40 flex items-center gap-2.5 pl-4 pr-5 py-3.5 rounded-full bg-gradient-to-r from-[#FF8A65] to-[#F59E0B] hover:from-[#F4511E] hover:to-[#D97706] text-white font-cute font-bold text-sm sm:text-base shadow-xl shadow-orange-500/30 border-2 border-white transition transform active:scale-95 cursor-pointer">
+        <span class="w-7 h-7 rounded-full bg-white/25 flex items-center justify-center text-base">
+            🧭
+        </span>
+        <span>เมนู</span>
+    </button>
+
+    <!-- =================================================================== -->
+    <!-- BOTTOM SHEET DRAWER (SLIDES UP FROM BOTTOM WITH BLURRED BACKDROP)   -->
+    <!-- =================================================================== -->
+    <div id="bottom-sheet-wrapper" class="no-print fixed inset-0 z-50 hidden" aria-hidden="true">
+        <!-- Blurred Backdrop -->
+        <div id="sheet-backdrop" onclick="closeBottomSheet()" class="sheet-backdrop fixed inset-0 bg-slate-900/40 backdrop-blur-sm opacity-0 cursor-pointer"></div>
+
+        <!-- Drawer Panel -->
+        <div id="sheet-panel" class="sheet-panel fixed bottom-0 left-0 right-0 max-w-2xl mx-auto bg-[#FDFBF7] rounded-t-[2rem] shadow-2xl border-t-2 border-x-2 border-amber-100 p-5 sm:p-6 transform translate-y-full max-h-[88vh] overflow-y-auto">
+            <!-- Handle Bar -->
+            <div class="w-12 h-1.5 bg-slate-300 rounded-full mx-auto mb-4"></div>
+
+            <!-- Sheet Header -->
+            <div class="flex items-center justify-between gap-3 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-10 h-10 rounded-2xl bg-[#FFF0EB] border border-[#FFCCBC] flex items-center justify-center text-xl">🗺️</span>
+                    <div>
+                        <h3 class="font-cute font-bold text-lg text-slate-800">เมนูนำทางทริปเชียงใหม่ - ลำพูน</h3>
+                        <p class="text-xs text-slate-500">แตะเพื่อเลื่อนไปยังส่วนที่ต้องการได้ทันทีค่ะ</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeBottomSheet()" aria-label="ปิดเมนู" class="w-10 h-10 rounded-full bg-white hover:bg-slate-100 border border-slate-200 text-slate-600 flex items-center justify-center transition cursor-pointer">
+                    <i class="fa-solid fa-xmark text-base"></i>
+                </button>
+            </div>
+
+            <!-- Synced Progress Bar Inside Bottom Sheet -->
+            <div class="bg-white rounded-2xl p-4 border-2 border-matcha-border mb-5 shadow-2xs">
+                <div class="flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm mb-2">
+                    <span class="font-cute font-bold text-slate-700 flex items-center gap-1.5">
+                        <span>🌈</span>
+                        <span>ความคืบหน้าทริปทั้งหมด</span>
+                    </span>
+                    <span id="sheet-progress-text" class="font-cute font-bold text-matcha-text bg-matcha-bg px-3 py-0.5 rounded-full border border-matcha-border">
+                        เสร็จสิ้นแล้ว 0 จาก 0 รายการ (0%)
+                    </span>
+                </div>
+                <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200/70">
+                    <div id="sheet-progress-bar" class="h-full bg-gradient-to-r from-amber-400 via-emerald-400 to-teal-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Navigation Links Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-5">
+                <button type="button" onclick="jumpToSection('section-bookings')" class="w-full text-left px-4 py-3.5 rounded-2xl bg-skyPastel-bg/80 hover:bg-skyPastel-bg border border-skyPastel-border text-skyPastel-text font-cute font-bold text-sm flex items-center gap-3 transition cursor-pointer">
+                    <span class="text-xl">🎫</span>
+                    <span>ข้อมูลการจอง (ตั๋ว • รถเช่า • โรงแรม)</span>
+                </button>
+
+                <button type="button" onclick="jumpToSection('section-checklist')" class="w-full text-left px-4 py-3.5 rounded-2xl bg-matcha-bg/80 hover:bg-matcha-bg border border-matcha-border text-matcha-text font-cute font-bold text-sm flex items-center gap-3 transition cursor-pointer">
+                    <span class="text-xl">🎒</span>
+                    <span>เช็กลิสต์ก่อนเดินทาง</span>
+                </button>
+
+                <button type="button" onclick="jumpToDay('day1')" class="w-full text-left px-4 py-3.5 rounded-2xl bg-butter-bg/85 hover:bg-butter-bg border border-butter-border text-slate-800 font-cute font-bold text-sm flex items-center gap-3 transition cursor-pointer">
+                    <span class="text-xl">🐑</span>
+                    <span>วันที่ 1 • วันพฤหัสบดีที่ 26 พฤศจิกายน 2026</span>
+                </button>
+
+                <button type="button" onclick="jumpToDay('day2')" class="w-full text-left px-4 py-3.5 rounded-2xl bg-peach-bg/85 hover:bg-peach-bg border border-peach-border text-slate-800 font-cute font-bold text-sm flex items-center gap-3 transition cursor-pointer">
+                    <span class="text-xl">👘</span>
+                    <span>วันที่ 2 • วันศุกร์ที่ 27 พฤศจิกายน 2026</span>
+                </button>
+
+                <button type="button" onclick="jumpToDay('day3')" class="w-full text-left px-4 py-3.5 rounded-2xl bg-matcha-bg/85 hover:bg-matcha-bg border border-matcha-border text-slate-800 font-cute font-bold text-sm flex items-center gap-3 transition cursor-pointer">
+                    <span class="text-xl">🛕</span>
+                    <span>วันที่ 3 • วันเสาร์ที่ 28 พฤศจิกายน 2026</span>
+                </button>
+
+                <button type="button" onclick="jumpToDay('day4')" class="w-full text-left px-4 py-3.5 rounded-2xl bg-lavender-bg/85 hover:bg-lavender-bg border border-lavender-border text-slate-800 font-cute font-bold text-sm flex items-center gap-3 transition cursor-pointer">
+                    <span class="text-xl">🧺</span>
+                    <span>วันที่ 4 • วันอาทิตย์ที่ 29 พฤศจิกายน 2026</span>
+                </button>
+            </div>
+
+            <!-- Utility Actions -->
+            <div class="flex flex-wrap gap-2.5 pt-3 border-t border-slate-200">
+                <button type="button" onclick="scrollToTopAndClose()" class="flex-1 py-3 px-4 rounded-2xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 font-cute font-bold text-sm flex items-center justify-center gap-2 transition cursor-pointer">
+                    <i class="fa-solid fa-arrow-up text-sky-600"></i>
+                    <span>กลับขึ้นด้านบนสุด</span>
+                </button>
+
+                <button type="button" onclick="closeBottomSheet(); openResetModal();" class="flex-1 py-3 px-4 rounded-2xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 font-cute font-bold text-sm flex items-center justify-center gap-2 transition cursor-pointer">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    <span>รีเซ็ตเช็กลิสต์</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- HERO SECTION (STATIC FLOW - NO STICKY BAR AT TOP)                   -->
+    <!-- =================================================================== -->
+    <header id="top" class="pt-6 sm:pt-8 pb-5 px-4">
         <div class="max-w-5xl mx-auto">
-            <div class="cute-card bg-gradient-to-br from-[#FFF9EB] via-[#FFFFFF] to-[#EBF8F2] border-2 border-[#F3E8D6] p-6 sm:p-8 relative overflow-hidden">
-                <!-- Cute Decorative Blobs -->
-                <div class="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-[#FFF0EB] opacity-70 pointer-events-none"></div>
-                <div class="absolute -bottom-14 -left-14 w-48 h-48 rounded-full bg-[#E6F4EA] opacity-60 pointer-events-none"></div>
+            <div class="cute-card bg-gradient-to-br from-[#FFF9EB] via-[#FFFFFF] to-[#EBF8F2] border-2 border-[#F3E8D6] p-5 sm:p-8 relative overflow-hidden">
+                <!-- Cute Soft Background Shapes -->
+                <div class="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-peach-bg opacity-70 pointer-events-none"></div>
+                <div class="absolute -bottom-14 -left-14 w-48 h-48 rounded-full bg-matcha-bg opacity-65 pointer-events-none"></div>
 
                 <div class="relative z-10">
-                    <!-- Top Action Bar -->
+                    <!-- Top Badge & Print/Reset Actions -->
                     <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
-                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF0EB] border border-[#FFCCBC] text-[#E65100] text-xs sm:text-sm font-cute font-bold shadow-2xs">
-                            <span class="text-base">✈️🐑🛕🌸</span>
-                            <span>Chiang Mai & Lamphun Autumn Trip 2026</span>
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-peach-bg border border-peach-border text-peach-text text-xs sm:text-sm font-cute font-bold shadow-2xs">
+                            <span class="text-base">✈️🐑🛕🧺</span>
+                            <span>Chiang Mai & Lamphun Trip 2026</span>
                         </div>
 
                         <div class="flex flex-wrap items-center gap-2 no-print">
-                            <button onclick="window.print()" class="px-4 py-2 rounded-2xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs sm:text-sm font-medium transition flex items-center gap-2 shadow-2xs cursor-pointer">
+                            <button type="button" onclick="window.print()" class="px-3.5 py-2 rounded-2xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs sm:text-sm font-medium transition flex items-center gap-2 shadow-2xs cursor-pointer">
                                 <i class="fa-solid fa-print text-sky-600"></i>
                                 <span>พิมพ์เอกสาร / บันทึกเป็น PDF</span>
                             </button>
-                            <button onclick="openResetModal()" class="px-4 py-2 rounded-2xl bg-white hover:bg-rose-50 text-slate-700 hover:text-rose-600 border border-slate-200 text-xs sm:text-sm font-medium transition flex items-center gap-2 shadow-2xs cursor-pointer">
+                            <button type="button" onclick="openResetModal()" class="px-3.5 py-2 rounded-2xl bg-white hover:bg-rose-50 text-slate-700 hover:text-rose-600 border border-slate-200 text-xs sm:text-sm font-medium transition flex items-center gap-2 shadow-2xs cursor-pointer">
                                 <i class="fa-solid fa-rotate-left text-rose-500"></i>
                                 <span>รีเซ็ตเช็กลิสต์</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Main Title & Full Subtitle -->
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <!-- Title & Mascot Badge -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-5">
                         <div class="space-y-2.5">
                             <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800 font-cute leading-snug">
                                 แพลนเที่ยว เชียงใหม่ - ลำพูน 4 วัน 3 คืน
                             </h1>
-                            <p class="text-base sm:text-lg font-medium text-amber-800 bg-amber-100/70 inline-block px-4 py-1 rounded-2xl border border-amber-200/80">
-                                <i class="fa-regular fa-calendar-check mr-1.5"></i>วันพฤหัสบดีที่ 26 พฤศจิกายน 2026 ถึง วันอาทิตย์ที่ 29 พฤศจิกายน 2026
-                            </p>
+                            <div class="inline-flex items-center gap-2 text-sm sm:text-base font-semibold text-amber-900 bg-butter-bg px-4 py-1.5 rounded-2xl border border-butter-border">
+                                <i class="fa-regular fa-calendar-check text-amber-700"></i>
+                                <span>วันพฤหัสบดีที่ 26 พฤศจิกายน 2026 ถึง วันอาทิตย์ที่ 29 พฤศจิกายน 2026</span>
+                            </div>
                             <p class="text-sm sm:text-base text-slate-600 leading-relaxed pt-1">
-                                ทริปขับรถเที่ยวสบายๆ รับลมหนาวปลายปี ครบทั้งฟาร์มแกะแม่ออน สวมชุดพื้นเมืองล้านนาไหว้พระเมืองเก่าลำพูน ชมวัดไม้โบราณวัดต้นเกว๋น เดินเล่นหมู่บ้านงานคราฟต์ ชมแสงเย็นอ่างแก้ว มหาวิทยาลัยเชียงใหม่ และพักโรงแรมมาตรฐานระดับ 5 ดาวตลอดทั้ง 3 คืน
+                                ทริปขับรถเที่ยวรับลมหนาวสุดชิล บินตรงสายการบินไทยแอร์เอเชีย เช่ารถ AVIS ขับเที่ยวครบทั้งฟาร์มแกะอำเภอแม่ออน ถนนช้างม่อย คลองแม่ข่า สวมชุดพื้นเมืองล้านนาไหว้พระเมืองเก่าลำพูน วัดต้นเกว๋น คาเฟ่ฮอปปิ้ง ชมแสงเย็นสวนสาธารณะองค์การบริหารส่วนจังหวัดเชียงใหม่ และเดินเล่นจริงใจมาร์เก็ตก่อนบินกลับ
                             </p>
                         </div>
 
-                        <!-- Cute SVG Illustration Badge -->
+                        <!-- Cute Illustration Badge -->
                         <div class="shrink-0 flex items-center justify-center">
-                            <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl bg-white border-2 border-amber-100 shadow-md flex flex-col items-center justify-center p-3 text-center animate-float">
+                            <div class="w-32 h-32 rounded-3xl bg-white border-2 border-amber-100 shadow-md flex flex-col items-center justify-center p-3 text-center animate-float">
                                 <div class="text-4xl mb-1">🐑✨</div>
-                                <span class="font-cute font-bold text-xs text-slate-700">ทริปพร้อมลุย!</span>
-                                <span class="text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full mt-1 font-medium">จองครบ 100%</span>
+                                <span class="font-cute font-bold text-xs text-slate-800">พร้อมออกเดินทาง!</span>
+                                <span class="text-[11px] text-matcha-text bg-matcha-bg border border-matcha-border px-2.5 py-0.5 rounded-full mt-1 font-semibold">
+                                    อัปเดตล่าสุดครบ 100%
+                                </span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 4-Day Full Summary Cards (No truncation) -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mt-7">
-                        <div class="bg-[#FFF9DB]/70 border border-[#FFF59D] rounded-2xl p-4 flex flex-col justify-between">
-                            <div class="flex items-center justify-between gap-2 mb-1.5">
-                                <span class="font-cute font-bold text-xs px-2.5 py-0.5 rounded-full bg-white text-[#F57F17] border border-amber-200">วันที่ 1</span>
-                                <span class="text-lg">✈️🐑🏮</span>
+                    <!-- 4-Day Quick Overview Cards (Full Text, Zero Truncation) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mt-6">
+                        <div class="bg-butter-bg/75 border border-butter-border rounded-2xl p-4 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="font-cute font-bold text-xs px-2.5 py-0.5 rounded-full bg-white text-butter-text border border-amber-200">วันที่ 1</span>
+                                    <span class="text-lg">✈️🐑🏮</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-600">วันพฤหัสบดีที่ 26 พฤศจิกายน 2026</div>
+                                <div class="text-sm font-bold text-slate-800 mt-1 leading-snug">
+                                    บิน 10:00 น. • รับรถ AVIS • ฮักแกะฟาร์ม • ถนนช้างม่อย • ประตูท่าแพ • คลองแม่ข่า
+                                </div>
                             </div>
-                            <div class="text-xs font-semibold text-slate-600">วันพฤหัสบดีที่ 26 พฤศจิกายน 2026</div>
-                            <div class="text-sm font-bold text-slate-800 mt-1 leading-snug">
-                                รับรถเช่า AVIS • ฮักแกะฟาร์มแม่ออน • ถนนช้างม่อย • ประตูท่าแพ • คลองแม่ข่า
-                            </div>
-                            <div class="text-xs text-amber-900 mt-2 pt-2 border-t border-amber-200/60 font-medium">
-                                🏨 พัก: S48 River Ping Hotel
-                            </div>
-                        </div>
-
-                        <div class="bg-[#FFF0EB]/70 border border-[#FFCCBC] rounded-2xl p-4 flex flex-col justify-between">
-                            <div class="flex items-center justify-between gap-2 mb-1.5">
-                                <span class="font-cute font-bold text-xs px-2.5 py-0.5 rounded-full bg-white text-[#E65100] border border-orange-200">วันที่ 2</span>
-                                <span class="text-lg">👘🛕☕</span>
-                            </div>
-                            <div class="text-xs font-semibold text-slate-600">วันศุกร์ที่ 27 พฤศจิกายน 2026</div>
-                            <div class="text-sm font-bold text-slate-800 mt-1 leading-snug">
-                                เช่าชุดพื้นเมืองลำพูน • วัดพระธาตุหริภุญชัย • พูน คาเฟ่ • วัดสันป่ายางหลวง • Judy's Home Cafe
-                            </div>
-                            <div class="text-xs text-orange-950 mt-2 pt-2 border-t border-orange-200/60 font-medium">
-                                🏨 พัก: Zensala Riverpark Resort
+                            <div class="text-xs text-amber-950 mt-2.5 pt-2 border-t border-amber-200/70 font-medium">
+                                🏨 พัก: S48 River Ping (ระดับ 5 ดาว)
                             </div>
                         </div>
 
-                        <div class="bg-[#E6F4EA]/70 border border-[#C8E6C9] rounded-2xl p-4 flex flex-col justify-between">
-                            <div class="flex items-center justify-between gap-2 mb-1.5">
-                                <span class="font-cute font-bold text-xs px-2.5 py-0.5 rounded-full bg-white text-[#2E7D32] border border-emerald-200">วันที่ 3</span>
-                                <span class="text-lg">🌿🎨🌅</span>
+                        <div class="bg-peach-bg/75 border border-peach-border rounded-2xl p-4 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="font-cute font-bold text-xs px-2.5 py-0.5 rounded-full bg-white text-peach-text border border-orange-200">วันที่ 2</span>
+                                    <span class="text-lg">👘🛕☕</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-600">วันศุกร์ที่ 27 พฤศจิกายน 2026</div>
+                                <div class="text-sm font-bold text-slate-800 mt-1 leading-snug">
+                                    เช่าชุดพื้นเมืองลำพูน • วัดพระธาตุหริภุญชัย • PHUN Café • วัดสันป่ายางหลวง • Judy's home cafe
+                                </div>
                             </div>
-                            <div class="text-xs font-semibold text-slate-600">วันเสาร์ที่ 28 พฤศจิกายน 2026</div>
-                            <div class="text-sm font-bold text-slate-800 mt-1 leading-snug">
-                                วัดอินทราวาส (วัดต้นเกว๋น) • 99 คาเฟ่ • บ้านข้างวัด • อ่างแก้ว มหาวิทยาลัยเชียงใหม่
-                            </div>
-                            <div class="text-xs text-emerald-950 mt-2 pt-2 border-t border-emerald-200/60 font-medium">
-                                🏨 พัก: Wintree City Resort Chiang Mai
+                            <div class="text-xs text-orange-950 mt-2.5 pt-2 border-t border-orange-200/70 font-medium">
+                                🏨 พัก: Zensala Riverpark Resort (ระดับ 4 ดาว)
                             </div>
                         </div>
 
-                        <div class="bg-[#EBF5FF]/70 border border-[#BBDEFB] rounded-2xl p-4 flex flex-col justify-between">
-                            <div class="flex items-center justify-between gap-2 mb-1.5">
-                                <span class="font-cute font-bold text-xs px-2.5 py-0.5 rounded-full bg-white text-[#1565C0] border border-sky-200">วันที่ 4</span>
-                                <span class="text-lg">🦢🍰🛫</span>
+                        <div class="bg-matcha-bg/75 border border-matcha-border rounded-2xl p-4 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="font-cute font-bold text-xs px-2.5 py-0.5 rounded-full bg-white text-matcha-text border border-emerald-200">วันที่ 3</span>
+                                    <span class="text-lg">🏯🍵🦢</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-600">วันเสาร์ที่ 28 พฤศจิกายน 2026</div>
+                                <div class="text-sm font-bold text-slate-800 mt-1 leading-snug">
+                                    วัดต้นเกว๋น • 99 คาเฟ่ • บ้านข้างวัด • The Baristro Asian Style • Joogarood cafe • สวนอบจ.เชียงใหม่
+                                </div>
                             </div>
-                            <div class="text-xs font-semibold text-slate-600">วันอาทิตย์ที่ 29 พฤศจิกายน 2026</div>
-                            <div class="text-sm font-bold text-slate-800 mt-1 leading-snug">
-                                สวนสาธารณะองค์การบริหารส่วนจังหวัดเชียงใหม่ • Rich Mellow • คืนรถ AVIS • บินกลับกรุงเทพมหานคร
+                            <div class="text-xs text-emerald-950 mt-2.5 pt-2 border-t border-emerald-200/70 font-medium">
+                                🏨 พัก: Wintree City Resort Chiang Mai (ระดับ 5 ดาว)
                             </div>
-                            <div class="text-xs text-sky-950 mt-2 pt-2 border-t border-sky-200/60 font-medium">
-                                🌅 ชมวิวพระอาทิตย์ตกแถวที่ 26 ฝั่งขวา
+                        </div>
+
+                        <div class="bg-skyPastel-bg/75 border border-skyPastel-border rounded-2xl p-4 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="font-cute font-bold text-xs px-2.5 py-0.5 rounded-full bg-white text-skyPastel-text border border-sky-200">วันที่ 4</span>
+                                    <span class="text-lg">🧺⛽🛫</span>
+                                </div>
+                                <div class="text-xs font-semibold text-slate-600">วันอาทิตย์ที่ 29 พฤศจิกายน 2026</div>
+                                <div class="text-sm font-bold text-slate-800 mt-1 leading-snug">
+                                    จริงใจมาร์เก็ต เชียงใหม่ • ซื้อของฝาก • เติมน้ำมันคืนรถ AVIS • บินกลับ 15:50 น. ถึงดอนเมือง 16:55 น.
+                                </div>
+                            </div>
+                            <div class="text-xs text-sky-950 mt-2.5 pt-2 border-t border-sky-200/70 font-medium">
+                                🌅 ที่นั่งแถว 26 ฝั่งขวา ชมแสงอาทิตย์ตก
                             </div>
                         </div>
                     </div>
 
-                    <!-- Cute Progress Tracker Bar -->
-                    <div class="mt-6 bg-white/90 rounded-2xl p-4 border-2 border-emerald-100 shadow-2xs">
+                    <!-- Overall Progress Tracker Inside Hero -->
+                    <div class="mt-6 bg-white/95 rounded-2xl p-4 border-2 border-matcha-border shadow-2xs">
                         <div class="flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm mb-2">
                             <span class="font-cute font-bold text-slate-700 flex items-center gap-2">
                                 <span class="text-lg">🌈</span>
-                                <span>ความคืบหน้าการเตรียมตัวและเช็กอินสถานที่ท่องเที่ยว</span>
+                                <span>ความคืบหน้าการเตรียมตัวและเช็กอินสถานที่ท่องเที่ยวทั้งหมด</span>
                             </span>
-                            <span id="progress-text" class="font-cute font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                            <span id="hero-progress-text" class="font-cute font-bold text-matcha-text bg-matcha-bg px-3 py-1 rounded-full border border-matcha-border">
                                 เสร็จสิ้นแล้ว 0 จาก 0 รายการ (0%)
                             </span>
                         </div>
                         <div class="w-full h-3.5 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200/70">
-                            <div id="progress-bar" class="h-full bg-gradient-to-r from-amber-400 via-emerald-400 to-teal-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+                            <div id="hero-progress-bar" class="h-full bg-gradient-to-r from-amber-400 via-emerald-400 to-teal-500 rounded-full transition-all duration-500" style="width: 0%"></div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- STATIC QUICK-JUMP BAR UNDER HERO (FLOWS NATURALLY - NOT STICKY!) -->
+            <div class="mt-5 bg-white rounded-3xl p-3 border-2 border-amber-100 shadow-sm no-print">
+                <div class="text-xs font-cute font-bold text-slate-500 px-2 pb-2 flex items-center gap-1.5">
+                    <span>⚡</span>
+                    <span>ปุ่มลัดข้ามไปยังส่วนต่างๆ (เลื่อนอ่านได้เต็มหน้าจอ ไม่มีแถบค้างด้านบน หากต้องการเปิดเมนูระหว่างเลื่อน แตะปุ่ม "เมนู" มุมขวาล่างได้เลยค่ะ)</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <a href="#section-bookings" class="px-3.5 py-2 rounded-2xl bg-skyPastel-bg hover:bg-sky-100 border border-skyPastel-border text-skyPastel-text text-xs sm:text-sm font-cute font-bold transition">
+                        🎫 ข้อมูลการจองทั้งหมด
+                    </a>
+                    <a href="#section-checklist" class="px-3.5 py-2 rounded-2xl bg-matcha-bg hover:bg-emerald-100 border border-matcha-border text-matcha-text text-xs sm:text-sm font-cute font-bold transition">
+                        🎒 เช็กลิสต์ก่อนเดินทาง
+                    </a>
+                    <a href="#day-section-day1" onclick="ensureAllDaysVisible()" class="px-3.5 py-2 rounded-2xl bg-butter-bg hover:bg-amber-100 border border-butter-border text-amber-900 text-xs sm:text-sm font-cute font-bold transition">
+                        🐑 วันที่ 1 (26 พฤศจิกายน)
+                    </a>
+                    <a href="#day-section-day2" onclick="ensureAllDaysVisible()" class="px-3.5 py-2 rounded-2xl bg-peach-bg hover:bg-orange-100 border border-peach-border text-peach-text text-xs sm:text-sm font-cute font-bold transition">
+                        👘 วันที่ 2 (27 พฤศจิกายน)
+                    </a>
+                    <a href="#day-section-day3" onclick="ensureAllDaysVisible()" class="px-3.5 py-2 rounded-2xl bg-matcha-bg hover:bg-emerald-100 border border-matcha-border text-matcha-text text-xs sm:text-sm font-cute font-bold transition">
+                        🛕 วันที่ 3 (28 พฤศจิกายน)
+                    </a>
+                    <a href="#day-section-day4" onclick="ensureAllDaysVisible()" class="px-3.5 py-2 rounded-2xl bg-lavender-bg hover:bg-purple-100 border border-lavender-border text-lavender-text text-xs sm:text-sm font-cute font-bold transition">
+                        🧺 วันที่ 4 (29 พฤศจิกายน)
+                    </a>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- STICKY MAIN NAVIGATION BAR (Allows viewing All-in-One or focusing on a section) -->
-    <nav aria-label="เมนูหลัก" class="sticky top-2 z-30 px-4 mb-8 no-print">
-        <div class="max-w-5xl mx-auto">
-            <div class="bg-white/95 backdrop-blur-md p-2 rounded-3xl shadow-md border-2 border-amber-100 flex flex-wrap items-center justify-center sm:justify-between gap-2">
-                <div class="flex flex-wrap items-center gap-1.5 w-full sm:w-auto justify-center">
-                    <button onclick="switchMainSection('all')" id="nav-sec-all" class="main-sec-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-bold transition cursor-pointer bg-amber-400 text-slate-900 shadow-xs">
-                        ✨ แสดงภาพรวมทั้งหมด (ครบในหน้าเดียว)
-                    </button>
-                    <button onclick="switchMainSection('bookings')" id="nav-sec-bookings" class="main-sec-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-semibold transition cursor-pointer bg-slate-50 text-slate-600 hover:bg-amber-50">
-                        🎫 ข้อมูลตั๋ว รถเช่า และโรงแรมทั้ง 3 คืน
-                    </button>
-                    <button onclick="switchMainSection('checklist')" id="nav-sec-checklist" class="main-sec-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-semibold transition cursor-pointer bg-slate-50 text-slate-600 hover:bg-amber-50">
-                        🎒 เช็กลิสต์เตรียมตัวก่อนเดินทาง
-                    </button>
-                    <button onclick="switchMainSection('itinerary')" id="nav-sec-itinerary" class="main-sec-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-semibold transition cursor-pointer bg-slate-50 text-slate-600 hover:bg-amber-50">
-                        🗓️ ตารางเวลาท่องเที่ยวทั้ง 4 วัน
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- MAIN CONTENT CONTAINER -->
-    <main class="max-w-5xl mx-auto px-4 space-y-10">
+    <!-- =================================================================== -->
+    <!-- MAIN CONTENT CONTAINER                                              -->
+    <!-- =================================================================== -->
+    <main class="max-w-5xl mx-auto px-4 space-y-10 mt-4">
 
         <!-- =============================================================== -->
-        <!-- SECTION 1: COMPLETE BOOKING & FLIGHT HUB (ALL EXPANDED, NO TRUNCATION) -->
+        <!-- SECTION 1: ศูนย์รวมข้อมูลการจองทั้งหมด (แสดงครบทุกหมวดในหน้าเดียว) -->
         <!-- =============================================================== -->
         <section id="section-bookings" class="space-y-6">
-            <div class="flex items-center gap-3 px-1">
-                <div class="w-11 h-11 rounded-2xl bg-[#FFF0EB] border-2 border-[#FFCCBC] flex items-center justify-center text-xl shadow-2xs">
+            <div class="flex items-start sm:items-center gap-3 px-1">
+                <div class="w-12 h-12 rounded-2xl bg-peach-bg border-2 border-peach-border flex items-center justify-center text-2xl shrink-0 shadow-2xs">
                     🎫
                 </div>
                 <div>
-                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800 font-cute">
-                        ข้อมูลการจองสำคัญครบชุด (ตั๋วเครื่องบิน • รถเช่า AVIS • โรงแรม 5 ดาว 3 คืน)
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800 font-cute leading-snug">
+                        ส่วนที่ 1: ศูนย์รวมข้อมูลการจองทั้งหมด
                     </h2>
                     <p class="text-xs sm:text-sm text-slate-500">
-                        แสดงข้อมูลเต็มทุกบรรทัดโดยไม่ซ่อนเนื้อหา เพื่อความสะดวกในการยื่นแสดงต่อเจ้าหน้าที่สนามบิน เคาน์เตอร์รถเช่า และฝ่ายต้อนรับของโรงแรม
+                        แสดงรายละเอียดเที่ยวบินไทยแอร์เอเชีย รถเช่า AVIS และโรงแรมทั้ง 3 คืน ครบถ้วนในหน้าเดียวโดยไม่ต้องสลับแท็บ
                     </p>
                 </div>
             </div>
 
-            <!-- 1A. FLIGHT & BOARDING INFORMATION CARD -->
-            <div class="cute-card border-2 border-[#BBDEFB] overflow-hidden">
-                <div class="bg-[#EBF5FF] px-6 py-4 border-b border-[#BBDEFB] flex flex-wrap items-center justify-between gap-3">
+            <!-- 1.1 เที่ยวบิน (สายการบินไทยแอร์เอเชีย - Thai AirAsia) -->
+            <div class="cute-card border-2 border-skyPastel-border overflow-hidden">
+                <div class="bg-skyPastel-bg px-5 sm:px-6 py-4 border-b border-skyPastel-border flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-3">
-                        <span class="text-2xl">✈️</span>
+                        <span class="w-10 h-10 rounded-2xl bg-white border border-skyPastel-border flex items-center justify-center text-xl shrink-0">✈️</span>
                         <div>
-                            <h3 class="text-base sm:text-lg font-bold text-[#1565C0] font-cute">
-                                1. ข้อมูลตั๋วเครื่องบิน ทริคประจำที่นั่ง และกฎเวลาการขึ้นเครื่อง (Flight & Boarding Info)
+                            <h3 class="text-base sm:text-lg font-bold text-skyPastel-text font-cute">
+                                1. ข้อมูลเที่ยวบิน — สายการบินไทยแอร์เอเชีย (Thai AirAsia)
                             </h3>
-                            <p class="text-xs sm:text-sm text-slate-600">
-                                เส้นทาง: กรุงเทพมหานคร ⇄ ท่าอากาศยานนานาชาติเชียงใหม่ (ไป - กลับ)
+                            <p class="text-xs sm:text-sm text-slate-700">
+                                เส้นทาง: กรุงเทพมหานคร (ท่าอากาศยานดอนเมือง - DMK) ไป-กลับ เทศบาลนครเชียงใหม่ (ท่าอากาศยานนานาชาติเชียงใหม่ - CNX)
                             </p>
                         </div>
                     </div>
-                    <span class="px-3.5 py-1 rounded-full bg-white text-[#1565C0] border border-[#BBDEFB] text-xs font-bold font-cute">
-                        ที่นั่งแถวที่ 26 ฝั่งขวา (มีหน้าต่างชมวิวชัดเจน)
+                    <span class="px-3.5 py-1.5 rounded-full bg-white text-rose-600 border border-rose-200 text-xs font-bold font-cute">
+                        🔴 เที่ยวบินตรงทั้งไปและกลับ • ที่นั่งแถว 26 ฝั่งขวา
                     </span>
                 </div>
 
-                <div class="p-6 space-y-5">
-                    <!-- Outbound & Inbound Full Details -->
+                <div class="p-5 sm:p-6 space-y-5">
+                    <!-- Outbound & Inbound Flight Cards -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Outbound -->
-                        <div class="rounded-2xl bg-[#F8FBFF] border border-[#BBDEFB] p-5 space-y-2.5">
+                        <!-- ขาไป -->
+                        <div class="rounded-3xl bg-[#F8FBFF] border-2 border-skyPastel-border p-5 space-y-3">
                             <div class="flex flex-wrap items-center justify-between gap-2">
-                                <span class="px-3 py-1 rounded-full bg-[#EBF5FF] text-[#1565C0] text-xs font-bold font-cute">
-                                    🛫 เที่ยวบินขาไป • ช่วงเช้า
+                                <span class="px-3 py-1 rounded-full bg-skyPastel-bg text-skyPastel-text text-xs font-bold font-cute border border-skyPastel-border">
+                                    🛫 เที่ยวบินขาไป • Thai AirAsia
                                 </span>
-                                <span class="text-xs font-semibold text-slate-600">วันพฤหัสบดีที่ 26 พฤศจิกายน 2026</span>
+                                <span class="text-xs font-bold text-slate-700 bg-white px-3 py-1 rounded-full border border-slate-200">
+                                    วันพฤหัสบดีที่ 26 พฤศจิกายน 2026
+                                </span>
                             </div>
-                            <div class="text-base sm:text-lg font-bold text-slate-800">
-                                กรุงเทพมหานคร ➔ ท่าอากาศยานนานาชาติเชียงใหม่
-                            </div>
-                            <div class="text-sm text-slate-700 bg-white p-3.5 rounded-xl border border-sky-100 leading-relaxed">
-                                <div class="font-bold text-[#1565C0] mb-1">
-                                    ☀️ ทริคประจำที่นั่งแถวที่ 26 ฝั่งขวา (ขาไปช่วงเช้า):
+
+                            <div class="bg-white rounded-2xl p-4 border border-sky-100 flex items-center justify-between gap-3">
+                                <div>
+                                    <div class="text-2xl font-extrabold text-slate-900 font-cute">10:00 น.</div>
+                                    <div class="text-xs sm:text-sm font-bold text-skyPastel-text">ท่าอากาศยานดอนเมือง (DMK)</div>
+                                    <div class="text-xs text-slate-500">กรุงเทพมหานคร</div>
                                 </div>
-                                มีหน้าต่างชมวิวชัดเจน! ในเดือนพฤศจิกายน พระอาทิตย์จะขึ้นทางทิศตะวันออกเฉียงใต้ ขณะเครื่องบินมุ่งหน้าขึ้นทางทิศเหนือ แสงแดดยามเช้าจะส่องเฉียงเข้ามาทางหน้าต่างฝั่งขวา แนะนำให้พกแว่นกันแดดติดกระเป๋าขึ้นเครื่องไปด้วย และสามารถดึงม่านหน้าต่างลงมาบังแดดบางส่วนเมื่อแสงจ้าเกินไป
+                                <div class="text-center px-2">
+                                    <div class="text-xs font-bold text-slate-600">1 ชั่วโมง 15 นาที</div>
+                                    <div class="text-sky-500 text-sm my-0.5">── ✈️ ──</div>
+                                    <div class="text-[11px] font-semibold text-emerald-700 bg-matcha-bg px-2 py-0.5 rounded-full">เที่ยวบินตรง</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-extrabold text-slate-900 font-cute">11:15 น.</div>
+                                    <div class="text-xs sm:text-sm font-bold text-skyPastel-text">ท่าอากาศยานนานาชาติเชียงใหม่ (CNX)</div>
+                                    <div class="text-xs text-slate-500">เทศบาลนครเชียงใหม่</div>
+                                </div>
+                            </div>
+
+                            <div class="text-xs sm:text-sm text-slate-700 bg-butter-bg/70 p-3.5 rounded-2xl border border-butter-border leading-relaxed">
+                                <strong class="text-amber-900 font-cute block mb-1">☀️ โน้ตที่นั่งแถว 26 ฝั่งขวา (ขาไปช่วงสาย):</strong>
+                                แสงแดดจะส่องเข้าเฉียงทางด้านหลังฝั่งขวา แนะนำให้พกแว่นกันแดดติดกระเป๋าขึ้นเครื่อง และดึงม่านหน้าต่างช่วยบังแดดเมื่อแสงจ้า
                             </div>
                         </div>
 
-                        <!-- Inbound -->
-                        <div class="rounded-2xl bg-[#FFFDF5] border border-[#FFF59D] p-5 space-y-2.5">
+                        <!-- ขากลับ -->
+                        <div class="rounded-3xl bg-[#FFFDF5] border-2 border-butter-border p-5 space-y-3">
                             <div class="flex flex-wrap items-center justify-between gap-2">
-                                <span class="px-3 py-1 rounded-full bg-[#FFF9DB] text-[#F57F17] text-xs font-bold font-cute">
-                                    🛬 เที่ยวบินขากลับ • ช่วงบ่ายแก่ๆ
+                                <span class="px-3 py-1 rounded-full bg-butter-bg text-amber-900 text-xs font-bold font-cute border border-butter-border">
+                                    🛬 เที่ยวบินขากลับ • Thai AirAsia
                                 </span>
-                                <span class="text-xs font-semibold text-slate-600">วันอาทิตย์ที่ 29 พฤศจิกายน 2026</span>
+                                <span class="text-xs font-bold text-slate-700 bg-white px-3 py-1 rounded-full border border-slate-200">
+                                    วันอาทิตย์ที่ 29 พฤศจิกายน 2026
+                                </span>
                             </div>
-                            <div class="text-base sm:text-lg font-bold text-slate-800">
-                                ท่าอากาศยานนานาชาติเชียงใหม่ ➔ กรุงเทพมหานคร
-                            </div>
-                            <div class="text-sm text-slate-700 bg-white p-3.5 rounded-xl border border-amber-100 leading-relaxed">
-                                <div class="font-bold text-[#E65100] mb-1">
-                                    🌅 ทริคประจำที่นั่งแถวที่ 26 ฝั่งขวา (ขากลับช่วงบ่ายแก่ๆ):
+
+                            <div class="bg-white rounded-2xl p-4 border border-amber-100 flex items-center justify-between gap-3">
+                                <div>
+                                    <div class="text-2xl font-extrabold text-slate-900 font-cute">15:50 น.</div>
+                                    <div class="text-xs sm:text-sm font-bold text-peach-text">ท่าอากาศยานนานาชาติเชียงใหม่ (CNX)</div>
+                                    <div class="text-xs text-slate-500">เทศบาลนครเชียงใหม่</div>
                                 </div>
-                                ทำเลทองของการถ่ายภาพ! ขณะเครื่องบินมุ่งหน้าลงทางทิศใต้ในช่วงบ่ายแก่ๆ ถึงเย็น พระอาทิตย์จะคล้อยต่ำลงทางทิศตะวันตกเฉียงใต้ฝั่งขวาของตัวเครื่องพอดี คุณจะได้ชมวิวพระอาทิตย์ตกดิน (Sunset) และแสงสีส้มทองช่วง Golden Hour เหนือปุยเมฆแบบเต็มตา เตรียมเช็ดกระจกหน้าต่างรอถ่ายภาพและวิดีโอสวยๆ ได้ตลอดเที่ยวบิน
+                                <div class="text-center px-2">
+                                    <div class="text-xs font-bold text-slate-600">1 ชั่วโมง 5 นาที</div>
+                                    <div class="text-amber-500 text-sm my-0.5">── ✈️ ──</div>
+                                    <div class="text-[11px] font-semibold text-emerald-700 bg-matcha-bg px-2 py-0.5 rounded-full">เที่ยวบินตรง</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-2xl font-extrabold text-slate-900 font-cute">16:55 น.</div>
+                                    <div class="text-xs sm:text-sm font-bold text-peach-text">ท่าอากาศยานดอนเมือง (DMK)</div>
+                                    <div class="text-xs text-slate-500">กรุงเทพมหานคร</div>
+                                </div>
+                            </div>
+
+                            <div class="text-xs sm:text-sm text-slate-700 bg-peach-bg/70 p-3.5 rounded-2xl border border-peach-border leading-relaxed">
+                                <strong class="text-peach-text font-cute block mb-1">🌅 โน้ตที่นั่งแถว 26 ฝั่งขวา (ขากลับช่วงเย็น):</strong>
+                                ทำเลทองสำหรับถ่ายรูป! จะได้รับแสงพระอาทิตย์ตกดินช่วงเย็นสีส้มทองเหนือปุยเมฆสวยมาก เตรียมกล้องหรือมือถือถ่ายวิวริมหน้าต่างได้เลยค่ะ
                             </div>
                         </div>
                     </div>
 
-                    <!-- Boarding Rules Box -->
-                    <div class="rounded-2xl bg-slate-50 border border-slate-200 p-5">
+                    <!-- AirAsia Check-in & Boarding Important Notes -->
+                    <div class="rounded-3xl bg-slate-50 border border-slate-200 p-5">
                         <h4 class="text-sm sm:text-base font-bold text-slate-800 font-cute flex items-center gap-2 mb-3">
-                            <span>⏰</span>
-                            <span>กฎการเช็กอินและเวลาสำคัญในการขึ้นเครื่องบิน (Boarding Rules)</span>
+                            <span>📌</span>
+                            <span>โน้ตสำคัญสายการบินไทยแอร์เอเชีย (เช็กอินออนไลน์ • โหลดกระเป๋า • ประตูขึ้นเครื่อง)</span>
                         </h4>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-700">
-                            <div class="bg-white p-3.5 rounded-xl border border-slate-200/80 flex items-start gap-3">
-                                <span class="text-xl shrink-0">📱</span>
-                                <div>
-                                    <strong class="text-slate-900 block">การเช็กอินออนไลน์ล่วงหน้า (Online Check-in):</strong>
-                                    ระบบของสายการบินเปิดให้เช็กอินล่วงหน้าได้ตั้งแต่ 24 ชั่วโมง ถึง 14 วันก่อนเดินทาง (ขึ้นอยู่กับเงื่อนไขของสายการบิน) แนะนำให้กดเช็กอินผ่านแอปพลิเคชันตั้งแต่เช้าวันพุธที่ 25 พฤศจิกายน 2026 เพื่อรับบัตรโดยสารอิเล็กทรอนิกส์ (E-Boarding Pass) เก็บไว้ในโทรศัพท์มือถือ
-                                </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs sm:text-sm text-slate-700">
+                            <div class="bg-white p-4 rounded-2xl border border-emerald-200">
+                                <div class="font-cute font-bold text-matcha-text mb-1">📱 เช็กอินออนไลน์ผ่านแอปพลิเคชัน AirAsia MOVE</div>
+                                <p class="leading-relaxed">
+                                    แอร์เอเชียเปิดเช็กอินออนไลน์ล่วงหน้าได้สูงสุด <strong>14 วันก่อนเดินทาง</strong> สามารถกดเช็กอินรับบัตรโดยสารอิเล็กทรอนิกส์ (E-Boarding Pass) เก็บไว้ในมือถือได้เลยตั้งแต่วันนี้!
+                                </p>
                             </div>
-                            <div class="bg-white p-3.5 rounded-xl border border-slate-200/80 flex items-start gap-3">
-                                <span class="text-xl shrink-0">🧳</span>
-                                <div>
-                                    <strong class="text-slate-900 block">เวลาโหลดกระเป๋าสัมภาระใต้ท้องเครื่อง:</strong>
-                                    หากมีกระเป๋าสัมภาระที่ต้องการโหลดใต้ท้องเครื่อง ต้องดำเนินการที่เคาน์เตอร์สายการบินให้เสร็จสิ้น <strong>ก่อนเวลาเครื่องออกอย่างน้อย 45 นาที</strong>
-                                </div>
+                            <div class="bg-white p-4 rounded-2xl border border-amber-200">
+                                <div class="font-cute font-bold text-amber-900 mb-1">🧳 เคาน์เตอร์โหลดกระเป๋า</div>
+                                <p class="leading-relaxed">
+                                    เคาน์เตอร์โหลดกระเป๋าใต้ท้องเครื่องจะ <strong>ปิดก่อนเวลาเครื่องออก 45 นาที</strong> (ขาไปปิดเวลา 09:15 น. / ขากลับปิดเวลา 15:05 น.)
+                                </p>
                             </div>
-                            <div class="bg-white p-3.5 rounded-xl border border-slate-200/80 flex items-start gap-3">
-                                <span class="text-xl shrink-0">🚶‍♀️</span>
-                                <div>
-                                    <strong class="text-slate-900 block">เวลาเปิดเรียกขึ้นเครื่อง (Boarding Time):</strong>
-                                    ประตูทางออกขึ้นเครื่อง (Gate) จะเปิดให้ผู้โดยสารเดินขึ้นเครื่องบิน <strong>ก่อนเวลาออกเดินทางประมาณ 30 - 40 นาที</strong>
-                                </div>
-                            </div>
-                            <div class="bg-white p-3.5 rounded-xl border border-slate-200/80 flex items-start gap-3">
-                                <span class="text-xl shrink-0">🚪</span>
-                                <div>
-                                    <strong class="text-slate-900 block">เวลาปิดประตูทางออกขึ้นเครื่อง (Gate Close):</strong>
-                                    ประตูทางออกขึ้นเครื่องจะปิด <strong>ก่อนเวลาเครื่องออก 15 - 20 นาที</strong> ผู้โดยสารต้องผ่านจุดตรวจค้นและไปรอที่หน้าประตูขึ้นเครื่องให้ทันเวลาอย่างเคร่งครัด
-                                </div>
+                            <div class="bg-white p-4 rounded-2xl border border-rose-200">
+                                <div class="font-cute font-bold text-rose-700 mb-1">🚪 ประตูทางออกขึ้นเครื่อง (Gate)</div>
+                                <p class="leading-relaxed">
+                                    ประตูขึ้นเครื่อง (Gate) จะ <strong>ปิดก่อนเวลาเครื่องออก 20 นาที</strong> (ขาไปปิดเวลา 09:40 น. / ขากลับปิดเวลา 15:30 น.) ต้องมารอที่หน้าประตูขึ้นเครื่องก่อนเวลา
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 1B. AVIS CAR RENTAL CARD -->
-            <div class="cute-card border-2 border-[#FFCCBC] overflow-hidden">
-                <div class="bg-[#FFF0EB] px-6 py-4 border-b border-[#FFCCBC] flex flex-wrap items-center justify-between gap-3">
+            <!-- 1.2 รถเช่า (AVIS Rent A Car - จองผ่านโปรโมชั่น SCB-AVIS RENT A CAR) -->
+            <div class="cute-card border-2 border-peach-border overflow-hidden">
+                <div class="bg-peach-bg px-5 sm:px-6 py-4 border-b border-peach-border flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-3">
-                        <span class="text-2xl">🚗</span>
+                        <span class="w-10 h-10 rounded-2xl bg-white border border-peach-border flex items-center justify-center text-xl shrink-0">🚗</span>
                         <div>
-                            <h3 class="text-base sm:text-lg font-bold text-[#E65100] font-cute">
-                                2. ข้อมูลการจองรถเช่า AVIS Rent A Car (ชำระเงินออนไลน์เรียบร้อยแล้ว)
+                            <h3 class="text-base sm:text-lg font-bold text-peach-text font-cute">
+                                2. ข้อมูลรถเช่า — AVIS Rent A Car (จองผ่านโปรโมชั่น SCB-AVIS RENT A CAR)
                             </h3>
-                            <p class="text-xs sm:text-sm text-slate-600">
-                                จุดรับรถและคืนรถ: เคาน์เตอร์ AVIS ภายในอาคารผู้โดยสารขาเข้าภายในประเทศ ท่าอากาศยานนานาชาติเชียงใหม่
+                            <p class="text-xs sm:text-sm text-slate-700">
+                                จุดรับ-คืนรถ: เคาน์เตอร์ AVIS ภายในอาคารผู้โดยสาร ท่าอากาศยานนานาชาติเชียงใหม่
                             </p>
                         </div>
                     </div>
-                    <span class="px-3.5 py-1 rounded-full bg-white text-emerald-700 border border-emerald-200 text-xs font-bold font-cute">
-                        ✅ ขับข้ามจังหวัดไปลำพูนได้ ไม่จำกัดระยะทาง
-                    </span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=AVIS+Rent+A+Car+Chiang+Mai+International+Airport" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-2xl bg-white hover:bg-emerald-50 text-matcha-text border border-matcha-border text-xs font-bold font-cute transition flex items-center gap-1.5 shadow-2xs">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <span>แผนที่จุดรับรถสนามบินเชียงใหม่</span>
+                    </a>
                 </div>
 
-                <div class="p-6 space-y-5">
-                    <!-- Transaction Details Grid -->
+                <div class="p-5 sm:p-6 space-y-5">
+                    <!-- Transaction Cards Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-                        <div class="bg-[#FFF9F6] p-4 rounded-2xl border border-[#FFCCBC] flex items-center justify-between gap-2">
+                        <!-- Invoice Number -->
+                        <div class="bg-[#FFF9F6] p-4 rounded-2xl border border-peach-border flex items-center justify-between gap-2">
                             <div>
                                 <div class="text-xs text-slate-500 font-medium">หมายเลขใบแจ้งหนี้ (Invoice Number)</div>
                                 <div class="text-base font-bold font-mono text-slate-900 mt-0.5">TW2699019260EAE</div>
                             </div>
-                            <button onclick="copyText('TW2699019260EAE', 'คัดลอกหมายเลข Invoice: TW2699019260EAE เรียบร้อยแล้วค่ะ')" class="px-3 py-2 rounded-xl bg-white hover:bg-amber-50 text-[#E65100] border border-orange-200 text-xs font-semibold transition shrink-0 cursor-pointer shadow-2xs">
+                            <button type="button" onclick="copyText('TW2699019260EAE', 'คัดลอกหมายเลขใบแจ้งหนี้ TW2699019260EAE เรียบร้อยแล้วค่ะ')" class="px-3 py-2 rounded-xl bg-white hover:bg-peach-bg text-peach-text border border-peach-border text-xs font-bold transition shrink-0 cursor-pointer shadow-2xs">
                                 <i class="fa-regular fa-copy mr-1"></i> คัดลอก
                             </button>
                         </div>
 
-                        <div class="bg-[#FFF9F6] p-4 rounded-2xl border border-[#FFCCBC] flex items-center justify-between gap-2">
+                        <!-- Transaction Reference -->
+                        <div class="bg-[#FFF9F6] p-4 rounded-2xl border border-peach-border flex items-center justify-between gap-2">
                             <div>
-                                <div class="text-xs text-slate-500 font-medium">หมายเลขอ้างอิงรายการ (Transaction Reference)</div>
+                                <div class="text-xs text-slate-500 font-medium">หมายเลขอ้างอิงธุรกรรม (Transaction Reference)</div>
                                 <div class="text-base font-bold font-mono text-slate-900 mt-0.5">1255767554</div>
                             </div>
-                            <button onclick="copyText('1255767554', 'คัดลอกหมายเลขอ้างอิง: 1255767554 เรียบร้อยแล้วค่ะ')" class="px-3 py-2 rounded-xl bg-white hover:bg-amber-50 text-[#E65100] border border-orange-200 text-xs font-semibold transition shrink-0 cursor-pointer shadow-2xs">
+                            <button type="button" onclick="copyText('1255767554', 'คัดลอกหมายเลขอ้างอิงธุรกรรม 1255767554 เรียบร้อยแล้วค่ะ')" class="px-3 py-2 rounded-xl bg-white hover:bg-peach-bg text-peach-text border border-peach-border text-xs font-bold transition shrink-0 cursor-pointer shadow-2xs">
                                 <i class="fa-regular fa-copy mr-1"></i> คัดลอก
                             </button>
                         </div>
 
-                        <div class="bg-[#E6F4EA]/60 p-4 rounded-2xl border border-[#C8E6C9]">
-                            <div class="text-xs text-slate-600 font-medium">ยอดชำระเงินรวมทั้งสิ้น (AVIS Online Booking)</div>
-                            <div class="text-xl font-extrabold text-[#2E7D32] mt-0.5">2,337.00 บาท (THB)</div>
-                            <div class="text-xs text-emerald-800 mt-0.5">ร้านค้า: SCB-AVIS RENT A CAR</div>
+                        <!-- Amount Paid -->
+                        <div class="bg-matcha-bg/65 p-4 rounded-2xl border border-matcha-border">
+                            <div class="text-xs text-slate-600 font-medium">ยอดชำระเงินแล้ว (ชำระออนไลน์ล่วงหน้า)</div>
+                            <div class="text-xl font-extrabold text-matcha-text mt-0.5">2,337.00 บาท</div>
+                            <div class="text-xs text-emerald-900 mt-0.5">ชำระเมื่อวันที่ 17 ตุลาคม 2026</div>
                         </div>
 
+                        <!-- Credit Card Used -->
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                            <div class="text-xs text-slate-500 font-medium">บัตรเครดิตที่ใช้ชำระเงิน (ต้องพกใบจริงไปแสดง)</div>
-                            <div class="text-sm sm:text-base font-bold text-slate-800 mt-0.5">Visa 492141XXXXXX6622</div>
-                            <div class="text-xs text-rose-600 font-medium mt-0.5">*ห้ามลืมพกบัตรเครดิตใบนี้ไปรูดมัดจำ</div>
+                            <div class="text-xs text-slate-500 font-medium">บัตรเครดิตที่ใช้ชำระเงิน (ต้องพกตัวจริงไปด้วย)</div>
+                            <div class="text-sm sm:text-base font-bold text-slate-900 mt-0.5">Visa 492141XXXXXX6622</div>
+                            <div class="text-xs text-rose-600 font-semibold mt-0.5">รหัสอนุมัติ (Approval Code): 003923</div>
                         </div>
 
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                            <div class="text-xs text-slate-500 font-medium">วันและเวลาที่ทำรายการ / รหัสอนุมัติ</div>
-                            <div class="text-sm font-bold text-slate-800 mt-0.5">วันที่ 17 ตุลาคม 2026 เวลา 15:29:59 น.</div>
-                            <div class="text-xs text-slate-600 mt-0.5">Approval Code: <strong>003923</strong></div>
-                        </div>
-
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex items-center justify-between gap-2">
+                        <!-- Phone Number -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 sm:col-span-2 flex flex-wrap items-center justify-between gap-3">
                             <div>
-                                <div class="text-xs text-slate-500 font-medium">โทรศัพท์ติดต่อฝ่ายบริการลูกค้า AVIS</div>
-                                <div class="text-base font-bold text-slate-800 mt-0.5">02-251-1131</div>
+                                <div class="text-xs text-slate-500 font-medium">เบอร์โทรศัพท์ติดต่อ AVIS Rent A Car (SCB-AVIS)</div>
+                                <div class="text-lg font-bold text-slate-900 mt-0.5">02-251-1131</div>
                             </div>
-                            <a href="tel:022511131" class="px-3.5 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold transition shrink-0 shadow-2xs">
-                                <i class="fa-solid fa-phone mr-1"></i> โทรออก
-                            </a>
+                            <div class="flex flex-wrap gap-2">
+                                <button type="button" onclick="copyText('022511131', 'คัดลอกเบอร์โทรศัพท์ AVIS 02-251-1131 เรียบร้อยแล้วค่ะ')" class="px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-xs font-bold transition cursor-pointer">
+                                    <i class="fa-regular fa-copy mr-1"></i> คัดลอกเบอร์
+                                </button>
+                                <a href="tel:022511131" class="px-4 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold transition shadow-2xs flex items-center gap-1.5">
+                                    <i class="fa-solid fa-phone"></i>
+                                    <span>โทรออก 02-251-1131</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Important Rental Instructions -->
-                    <div class="rounded-2xl bg-[#FFF9DB]/70 border border-[#FFF59D] p-5 space-y-2.5 text-sm text-slate-700">
-                        <h4 class="font-cute font-bold text-base text-[#E65100] flex items-center gap-2">
-                            <span>📌</span>
-                            <span>ข้อควรระวังและขั้นตอนสำคัญในการรับรถและคืนรถเช่า AVIS</span>
+                    <!-- Car Rental Pickup & Return Notes -->
+                    <div class="rounded-3xl bg-butter-bg/75 border border-butter-border p-5 space-y-2.5 text-xs sm:text-sm text-slate-700">
+                        <h4 class="font-cute font-bold text-sm sm:text-base text-peach-text flex items-center gap-2">
+                            <span>🔑</span>
+                            <span>โน้ตสำคัญสำหรับการรับรถและคืนรถเช่า AVIS</span>
                         </h4>
                         <ul class="space-y-2 list-disc list-inside leading-relaxed">
                             <li>
-                                <strong>เอกสารที่ต้องแสดงตอนรับรถ:</strong> บัตรประจำตัวประชาชนตัวจริง + ใบอนุญาตขับขี่รถยนต์ตัวจริง (หรือเปิดผ่านแอปพลิเคชัน DLT QR Licence) + อีเมลใบเสร็จหมายเลข Invoice <strong>TW2699019260EAE</strong>
+                                <strong>เอกสารและบัตรที่ต้องพกตัวจริง:</strong> ต้องพก <strong>บัตรเครดิต Visa ตัวจริงใบที่ลงท้ายด้วย 6622</strong> พร้อมบัตรประชาชนตัวจริงและใบขับขี่ตัวจริง เพื่อรูดกันวงเงินมัดจำหน้าเคาน์เตอร์ประมาณ 5,000 - 8,000 บาท (วงเงินคืนอัตโนมัติภายใน 7 - 14 วันทำการหลังคืนรถ)
                             </li>
                             <li>
-                                <strong>บัตรเครดิตสำหรับรูดมัดจำ:</strong> ผู้เช่าต้องนำ <strong>บัตรเครดิต Visa ตัวจริงใบที่ลงท้ายด้วยหมายเลข 6622</strong> ไปรูดกันวงเงินมัดจำที่หน้าเคาน์เตอร์ประมาณ 5,000 - 8,000 บาท (วงเงินจะถูกปลดล็อกคืนเข้าบัตรเครดิตอัตโนมัติภายใน 7 - 14 วันทำการหลังจากคืนรถเรียบร้อย)
+                                <strong>ประกันเสริมเพื่อความสบายใจ (SCDW):</strong> แนะนำให้สอบถามซื้อประกันชั้น 1 แบบไม่มีค่าเสียหายส่วนแรก (SCDW) เพิ่มเติมที่เคาน์เตอร์ในวันรับรถ
                             </li>
                             <li>
-                                <strong>คำแนะนำเรื่องประกันภัยรถยนต์เสริม (SCDW):</strong> แนะนำให้แจ้งพนักงานหน้าเคาน์เตอร์เพื่อซื้อประกันภัยชั้น 1 แบบไม่มีค่าเสียหายส่วนแรก (Super Collision Damage Waiver - SCDW) เพิ่มเติม เพื่อความสบายใจสูงสุดในการขับรถเที่ยวครั้งแรกและขับข้ามจังหวัดโดยไม่ต้องกังวลเรื่องรอยขีดข่วนหรือหินดีด
+                                <strong>การตรวจรับสภาพรถ:</strong> ถ่ายคลิปวิดีโอรอบคันรถทุกมุม รอยขีดข่วนเดิม และถ่ายภาพหน้าปัดระดับน้ำมันตอนรับรถเก็บไว้เป็นหลักฐานเสมอ
                             </li>
                             <li>
-                                <strong>การตรวจสภาพรถก่อนขับออกจากสนามบิน:</strong> ให้ใช้โทรศัพท์มือถือถ่ายคลิปวิดีโอรอบตัวถังรถทุกด้าน ถ่ายจุดที่มีรอยขีดข่วนเดิม และถ่ายภาพหน้าปัดแสดงระดับน้ำมันเก็บไว้เป็นหลักฐานเสมอ
-                            </li>
-                            <li>
-                                <strong>การเติมน้ำมันก่อนคืนรถ (วันอาทิตย์ที่ 29 พฤศจิกายน 2026):</strong> ต้องแวะเติมน้ำมันให้เต็มถัง (Full-to-Full) ที่สถานีบริการน้ำมันใกล้ท่าอากาศยานนานาชาติเชียงใหม่ (เช่น ถนนมหิดล หรือแยกสนามบิน) และเก็บใบเสร็จค่าน้ำมันไว้แสดงต่อเจ้าหน้าที่ตอนส่งคืนรถ
+                                <strong>การคืนรถวันอาทิตย์ที่ 29 พฤศจิกายน 2026:</strong> เติมน้ำมันให้เต็มถัง (Full-to-Full) ที่ปั๊มน้ำมันใกล้สนามบินพร้อมเก็บใบเสร็จค่าน้ำมันไว้แสดงให้พนักงานก่อนคืนรถที่ท่าอากาศยานนานาชาติเชียงใหม่
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- 1C. ALL 3 FIVE-STAR HOTELS (FULLY VISIBLE CARDS) -->
+            <!-- 1.3 ที่พักทั้ง 3 คืน (แสดงครบทุกคืนพร้อม Google Maps และปุ่มติดต่อ) -->
             <div class="space-y-4">
                 <h3 class="text-lg sm:text-xl font-bold text-slate-800 font-cute flex items-center gap-2 px-1">
                     <span>🏨</span>
-                    <span>3. ข้อมูลที่พักมาตรฐานระดับ 5 ดาว ทั้ง 3 คืน (ไม่รับสัตว์เลี้ยง • ที่จอดรถสะดวกสบาย)</span>
+                    <span>3. ข้อมูลที่พักทั้ง 3 คืน (แสดงครบทุกคืนพร้อมแผนที่นำทางและข้อมูลติดต่อ)</span>
                 </h3>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                    <!-- Hotel Night 1 -->
-                    <div class="cute-card border-2 border-[#E1BEE7] flex flex-col justify-between overflow-hidden">
+                    <!-- คืนที่ 1: S48 River Ping -->
+                    <div class="cute-card border-2 border-lavender-border flex flex-col justify-between overflow-hidden">
                         <div>
-                            <div class="bg-[#F3E8FF] px-5 py-3.5 border-b border-[#E1BEE7] flex items-center justify-between">
-                                <span class="font-cute font-bold text-xs sm:text-sm text-[#6A1B9A] bg-white px-3 py-1 rounded-full border border-purple-200">
-                                    🌙 คืนที่ 1 • วันพฤหัสบดีที่ 26 พฤศจิกายน 2026
+                            <div class="bg-lavender-bg px-5 py-3.5 border-b border-lavender-border flex flex-wrap items-center justify-between gap-2">
+                                <span class="font-cute font-bold text-xs text-lavender-text bg-white px-3 py-1 rounded-full border border-purple-200">
+                                    🌙 คืนที่ 1
                                 </span>
-                                <span class="text-xs font-bold text-amber-500">★★★★★ 5 ดาว</span>
+                                <span class="text-xs font-bold text-amber-600 bg-white px-2.5 py-1 rounded-full border border-amber-200">
+                                    ★★★★★ ระดับ 5 ดาว
+                                </span>
                             </div>
                             <div class="p-5 space-y-3 text-sm">
                                 <div>
-                                    <h4 class="text-lg font-bold text-slate-900">S48 River Ping Hotel</h4>
-                                    <p class="text-xs text-slate-500 font-medium">โรงแรมเอส 48 ริเวอร์ ปิง (ริมแม่น้ำปิง โซนฟ้าฮ่าม)</p>
+                                    <div class="text-xs font-bold text-lavender-text mb-1">
+                                        วันพฤหัสบดีที่ 26 - วันศุกร์ที่ 27 พฤศจิกายน 2026
+                                    </div>
+                                    <h4 class="text-lg font-bold text-slate-900 font-cute">S48 River Ping</h4>
+                                    <p class="text-xs font-medium text-slate-600">โรงแรมเอส 48 ริเวอร์ปิง</p>
                                 </div>
 
-                                <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-1.5 text-xs sm:text-sm text-slate-700">
-                                    <div><strong>📍 ที่อยู่:</strong> 427 ถนนเจริญราษฎร์ ตำบลฟ้าฮ่าม อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50000 ประเทศไทย</div>
-                                    <div><strong>🕒 เวลาเช็คอิน:</strong> วันพฤหัสบดีที่ 26 พฤศจิกายน 2026 (หลังเวลา 14:00 น.)</div>
-                                    <div><strong>🕛 เวลาเช็คเอาต์:</strong> วันศุกร์ที่ 27 พฤศจิกายน 2026 (ก่อนเวลา 12:00 น.)</div>
-                                    <div><strong>🛏️ จำนวนห้องพัก:</strong> 1 ห้อง (เข้าพัก 1 คืน)</div>
-                                    <div><strong>✉️ อีเมลติดต่อ:</strong> <a href="mailto:s48riverping@gmail.com" class="text-purple-700 underline">s48riverping@gmail.com</a></div>
-                                </div>
-
-                                <div class="p-3.5 rounded-2xl bg-[#F3E8FF]/40 border border-purple-100 text-xs text-slate-700 leading-relaxed">
-                                    <strong class="text-[#6A1B9A] block mb-1">💡 ข้อมูลสำคัญและจุดเด่นทำเล:</strong>
-                                    รับช่วงต่อจากการกลับมาจากอำเภอแม่ออนได้สะดวก ช่วงเย็นขับรถเข้าเมืองไปถนนช้างม่อย ประตูท่าแพ และคลองแม่ข่าได้ใกล้ และเช้าวันศุกร์สามารถวิ่งออกถนนเลียบแม่น้ำปิงหรือซุปเปอร์ไฮเวย์เพื่อมุ่งหน้าสู่จังหวัดลำพูนได้ทันที (ที่พักไม่อนุญาตให้จัดปาร์ตี้สาวโสด ชายโสด หรืองานประเภทดังกล่าว และไม่รับสัตว์เลี้ยง)
+                                <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-2 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                                    <div><strong>📍 ที่อยู่:</strong> 427 ถนนเจริญราษฎร์ ตำบลฟ้าฮ่าม อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50000</div>
+                                    <div><strong>🕒 เช็คอิน:</strong> หลังเวลา 14:00 น.</div>
+                                    <div><strong>🕛 เช็คเอาต์:</strong> ก่อนเวลา 12:00 น.</div>
+                                    <div>
+                                        <strong>✉️ อีเมล:</strong>
+                                        <a href="mailto:s48riverping@gmail.com" class="text-lavender-text font-semibold underline break-all">s48riverping@gmail.com</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="px-5 pb-5 pt-2 flex flex-wrap gap-2">
-                            <a href="https://www.google.com/maps/search/?api=1&query=S48+River+Ping+Hotel+Chiang+Mai" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-3 rounded-xl bg-[#6A1B9A] hover:bg-purple-800 text-white text-xs font-semibold text-center transition shadow-2xs">
-                                <i class="fa-solid fa-map-location-dot mr-1"></i> เปิดแผนที่นำทาง
+                        <div class="px-5 pb-5 pt-1 flex flex-wrap gap-2">
+                            <a href="https://www.google.com/maps/search/?api=1&query=S48+River+Ping+427+Charoenrajd+Chiang+Mai" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-3 rounded-xl bg-lavender-text hover:bg-purple-900 text-white text-xs font-bold text-center transition shadow-2xs flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                                <span>เปิด Google Maps</span>
                             </a>
-                            <button onclick="copyText('427 ถนนเจริญราษฎร์ ตำบลฟ้าฮ่าม อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50000', 'คัดลอกที่อยู่โรงแรม S48 River Ping Hotel เรียบร้อยแล้วค่ะ')" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition cursor-pointer">
+                            <button type="button" onclick="copyText('427 ถนนเจริญราษฎร์ ตำบลฟ้าฮ่าม อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50000', 'คัดลอกที่อยู่ S48 River Ping เรียบร้อยแล้วค่ะ')" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition cursor-pointer">
                                 <i class="fa-regular fa-copy mr-1"></i> คัดลอกที่อยู่
                             </button>
                         </div>
                     </div>
 
-                    <!-- Hotel Night 2 -->
-                    <div class="cute-card border-2 border-[#C8E6C9] flex flex-col justify-between overflow-hidden">
+                    <!-- คืนที่ 2: Zensala Riverpark Resort -->
+                    <div class="cute-card border-2 border-matcha-border flex flex-col justify-between overflow-hidden">
                         <div>
-                            <div class="bg-[#E6F4EA] px-5 py-3.5 border-b border-[#C8E6C9] flex items-center justify-between">
-                                <span class="font-cute font-bold text-xs sm:text-sm text-[#2E7D32] bg-white px-3 py-1 rounded-full border border-emerald-200">
-                                    🌙 คืนที่ 2 • วันศุกร์ที่ 27 พฤศจิกายน 2026
+                            <div class="bg-matcha-bg px-5 py-3.5 border-b border-matcha-border flex flex-wrap items-center justify-between gap-2">
+                                <span class="font-cute font-bold text-xs text-matcha-text bg-white px-3 py-1 rounded-full border border-emerald-200">
+                                    🌙 คืนที่ 2
                                 </span>
-                                <span class="text-xs font-bold text-amber-500">★★★★★ 5 ดาว</span>
+                                <span class="text-xs font-bold text-amber-600 bg-white px-2.5 py-1 rounded-full border border-amber-200">
+                                    ★★★★☆ ระดับ 4 ดาว
+                                </span>
                             </div>
                             <div class="p-5 space-y-3 text-sm">
                                 <div>
-                                    <h4 class="text-lg font-bold text-slate-900">Zensala Riverpark Resort</h4>
-                                    <p class="text-xs text-slate-500 font-medium">เซนศาลา ริเวอร์ พาร์ค รีสอร์ต (ริมแม่น้ำปิง โซนป่าตัน)</p>
+                                    <div class="text-xs font-bold text-matcha-text mb-1">
+                                        วันศุกร์ที่ 27 - วันเสาร์ที่ 28 พฤศจิกายน 2026
+                                    </div>
+                                    <h4 class="text-lg font-bold text-slate-900 font-cute">Zensala Riverpark Resort</h4>
+                                    <p class="text-xs font-medium text-slate-600">เซนศาลา ริเวอร์ พาร์ค รีสอร์ต</p>
                                 </div>
 
-                                <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-1.5 text-xs sm:text-sm text-slate-700">
-                                    <div><strong>📍 ที่อยู่:</strong> 168 ถนนป่าตัน ตำบลป่าตัน อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300 ประเทศไทย</div>
-                                    <div><strong>🕒 เวลาเช็คอิน:</strong> วันศุกร์ที่ 27 พฤศจิกายน 2026 (หลังเวลา 14:00 น.)</div>
-                                    <div><strong>🕛 เวลาเช็คเอาต์:</strong> วันเสาร์ที่ 28 พฤศจิกายน 2026 (ก่อนเวลา 12:00 น.)</div>
-                                    <div><strong>🛏️ จำนวนห้องพัก:</strong> 1 ห้อง (เข้าพัก 1 คืน)</div>
-                                    <div><strong>🛎️ เวลาทำการฝ่ายต้อนรับ:</strong> 06:00 - 22:00 น.</div>
-                                </div>
-
-                                <div class="p-3.5 rounded-2xl bg-[#E6F4EA]/50 border border-emerald-100 text-xs text-slate-700 leading-relaxed">
-                                    <strong class="text-[#2E7D32] block mb-1">💡 ข้อมูลสำคัญและจุดเด่นทำเล:</strong>
-                                    รีสอร์ตหรูบรรยากาศเงียบสงบติดริมแม่น้ำปิง มีสระว่ายน้ำกลางแจ้งและห้องอาหารริมน้ำ ไม่อนุญาตให้นำสัตว์เลี้ยงและสัตว์ช่วยเหลือเข้าพักทุกชนิด เหมาะสำหรับการพักผ่อนหลังจากกลับมาจากจังหวัดลำพูน และเช้าวันเสาร์สามารถออกถนนวงแหวนหรือเลียบคลองชลประทานเพื่อไปวัดต้นเกว๋น อำเภอหางดง ได้อย่างคล่องตัว
+                                <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-2 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                                    <div><strong>📍 ที่อยู่:</strong> 168 ถนนป่าตัน ตำบลป่าตัน อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300</div>
+                                    <div><strong>🕒 เช็คอิน:</strong> หลังเวลา 14:00 น.</div>
+                                    <div><strong>🕛 เช็คเอาต์:</strong> ก่อนเวลา 12:00 น.</div>
+                                    <div class="text-xs text-matcha-text bg-matcha-bg/60 p-2.5 rounded-xl border border-matcha-border">
+                                        🛎️ หมายเหตุ: แผนกต้อนรับเปิดให้บริการถึงเวลา 22:00 น. (ไม่รับสัตว์เลี้ยง)
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="px-5 pb-5 pt-2 flex flex-wrap gap-2">
-                            <a href="https://www.google.com/maps/search/?api=1&query=Zensala+Riverpark+Resort+Chiang+Mai" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-3 rounded-xl bg-[#2E7D32] hover:bg-emerald-800 text-white text-xs font-semibold text-center transition shadow-2xs">
-                                <i class="fa-solid fa-map-location-dot mr-1"></i> เปิดแผนที่นำทาง
+                        <div class="px-5 pb-5 pt-1 flex flex-wrap gap-2">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Zensala+Riverpark+Resort+168+Patan+Chiang+Mai" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-3 rounded-xl bg-matcha-text hover:bg-emerald-900 text-white text-xs font-bold text-center transition shadow-2xs flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                                <span>เปิด Google Maps</span>
                             </a>
-                            <button onclick="copyText('168 ถนนป่าตัน ตำบลป่าตัน อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300', 'คัดลอกที่อยู่ Zensala Riverpark Resort เรียบร้อยแล้วค่ะ')" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition cursor-pointer">
+                            <button type="button" onclick="copyText('168 ถนนป่าตัน ตำบลป่าตัน อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300', 'คัดลอกที่อยู่ Zensala Riverpark Resort เรียบร้อยแล้วค่ะ')" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition cursor-pointer">
                                 <i class="fa-regular fa-copy mr-1"></i> คัดลอกที่อยู่
                             </button>
                         </div>
                     </div>
 
-                    <!-- Hotel Night 3 -->
-                    <div class="cute-card border-2 border-[#BBDEFB] flex flex-col justify-between overflow-hidden">
+                    <!-- คืนที่ 3: Wintree City Resort Chiang Mai -->
+                    <div class="cute-card border-2 border-skyPastel-border flex flex-col justify-between overflow-hidden">
                         <div>
-                            <div class="bg-[#EBF5FF] px-5 py-3.5 border-b border-[#BBDEFB] flex items-center justify-between">
-                                <span class="font-cute font-bold text-xs sm:text-sm text-[#1565C0] bg-white px-3 py-1 rounded-full border border-sky-200">
-                                    🌙 คืนที่ 3 • วันเสาร์ที่ 28 พฤศจิกายน 2026
+                            <div class="bg-skyPastel-bg px-5 py-3.5 border-b border-skyPastel-border flex flex-wrap items-center justify-between gap-2">
+                                <span class="font-cute font-bold text-xs text-skyPastel-text bg-white px-3 py-1 rounded-full border border-sky-200">
+                                    🌙 คืนที่ 3
                                 </span>
-                                <span class="text-xs font-bold text-amber-500">★★★★★ 5 ดาว</span>
+                                <span class="text-xs font-bold text-amber-600 bg-white px-2.5 py-1 rounded-full border border-amber-200">
+                                    ★★★★★ ระดับ 5 ดาว
+                                </span>
                             </div>
                             <div class="p-5 space-y-3 text-sm">
                                 <div>
-                                    <h4 class="text-lg font-bold text-slate-900">Wintree City Resort Chiang Mai</h4>
-                                    <p class="text-xs text-slate-500 font-medium">วินทรี ซิตี้ รีสอร์ต เชียงใหม่ (โซนช้างเผือก - ซุปเปอร์ไฮเวย์)</p>
+                                    <div class="text-xs font-bold text-skyPastel-text mb-1">
+                                        วันเสาร์ที่ 28 - วันอาทิตย์ที่ 29 พฤศจิกายน 2026
+                                    </div>
+                                    <h4 class="text-lg font-bold text-slate-900 font-cute">Wintree City Resort Chiang Mai</h4>
+                                    <p class="text-xs font-medium text-slate-600">วินทรี ซิตี้ รีสอร์ต เชียงใหม่</p>
                                 </div>
 
-                                <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-1.5 text-xs sm:text-sm text-slate-700">
-                                    <div><strong>📍 ที่อยู่:</strong> 72 ถนนเชียงใหม่-ลำปาง ตำบลช้างเผือก อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300 ประเทศไทย</div>
-                                    <div><strong>🕒 เวลาเช็คอิน:</strong> วันเสาร์ที่ 28 พฤศจิกายน 2026 (หลังเวลา 14:00 น.)</div>
-                                    <div><strong>🕛 เวลาเช็คเอาต์:</strong> วันอาทิตย์ที่ 29 พฤศจิกายน 2026 (ก่อนเวลา 12:00 น.)</div>
-                                    <div><strong>🛏️ จำนวนห้องพัก:</strong> 1 ห้อง (เข้าพัก 1 คืน)</div>
-                                    <div><strong>📞 โทรศัพท์:</strong> <a href="tel:+6652081377" class="text-[#1565C0] font-semibold underline">+66 52 081 377</a></div>
-                                    <div><strong>✉️ อีเมลติดต่อ:</strong> <a href="mailto:info@wintreecityresort.com" class="text-[#1565C0] underline">info@wintreecityresort.com</a></div>
-                                </div>
-
-                                <div class="p-3.5 rounded-2xl bg-[#EBF5FF]/50 border border-sky-100 text-xs text-slate-700 leading-relaxed">
-                                    <strong class="text-[#1565C0] block mb-1">💡 ข้อมูลสำคัญและจุดเด่นทำเล:</strong>
-                                    โรงแรมหรูระดับ 5 ดาวที่มีลานจอดรถกว้างขวางและไม่ต้องฝ่ารถติดในย่านนิมมานเหมินทร์ ไม่รับสัตว์เลี้ยง ขับรถไปอ่างแก้ว มหาวิทยาลัยเชียงใหม่ ในช่วงเย็นเพียงประมาณ 10 นาที และเช้าวันอาทิตย์สามารถขับรถไปถ่ายภาพรับลมหนาวที่สวนสาธารณะองค์การบริหารส่วนจังหวัดเชียงใหม่ได้ในเวลาเพียง 5 - 8 นาที
+                                <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 space-y-2 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                                    <div><strong>📍 ที่อยู่:</strong> 72 ถนนเชียงใหม่-ลำปาง อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300</div>
+                                    <div><strong>🕒 เช็คอิน:</strong> หลังเวลา 14:00 น.</div>
+                                    <div><strong>🕛 เช็คเอาต์:</strong> ก่อนเวลา 12:00 น.</div>
+                                    <div>
+                                        <strong>📞 โทรศัพท์:</strong>
+                                        <a href="tel:+6652081377" class="text-skyPastel-text font-bold underline">+66 52-081-377</a>
+                                    </div>
+                                    <div>
+                                        <strong>✉️ อีเมล:</strong>
+                                        <a href="mailto:info@wintreecityresort.com" class="text-skyPastel-text font-semibold underline break-all">info@wintreecityresort.com</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="px-5 pb-5 pt-2 flex flex-wrap gap-2">
-                            <a href="https://www.google.com/maps/search/?api=1&query=Wintree+City+Resort+Chiang+Mai" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-3 rounded-xl bg-[#1565C0] hover:bg-sky-800 text-white text-xs font-semibold text-center transition shadow-2xs">
-                                <i class="fa-solid fa-map-location-dot mr-1"></i> เปิดแผนที่นำทาง
+                        <div class="px-5 pb-5 pt-1 flex flex-wrap gap-2">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Wintree+City+Resort+Chiang+Mai+72+Chiang+Mai+Lampang" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-3 rounded-xl bg-skyPastel-text hover:bg-blue-900 text-white text-xs font-bold text-center transition shadow-2xs flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                                <span>เปิด Google Maps</span>
                             </a>
-                            <a href="tel:+6652081377" class="py-2.5 px-3 rounded-xl bg-sky-50 hover:bg-sky-100 text-[#1565C0] border border-sky-200 text-xs font-semibold transition">
-                                <i class="fa-solid fa-phone mr-1"></i> โทรหาที่พัก
+                            <a href="tel:+6652081377" class="py-2.5 px-3 rounded-xl bg-skyPastel-bg hover:bg-sky-100 text-skyPastel-text border border-skyPastel-border text-xs font-bold transition flex items-center gap-1">
+                                <i class="fa-solid fa-phone"></i>
+                                <span>โทรออก</span>
                             </a>
                         </div>
                     </div>
@@ -649,77 +824,75 @@
         </section>
 
         <!-- =============================================================== -->
-        <!-- SECTION 2: PRE-TRIP INTERACTIVE CHECKLIST                       -->
+        <!-- SECTION 2: เช็กลิสต์เตรียมตัวก่อนออกเดินทาง                       -->
         <!-- =============================================================== -->
         <section id="section-checklist" class="space-y-4">
-            <div class="cute-card border-2 border-[#C8E6C9] overflow-hidden">
-                <div class="bg-[#E6F4EA] px-6 py-4 border-b border-[#C8E6C9] flex flex-wrap items-center justify-between gap-3">
+            <div class="cute-card border-2 border-matcha-border overflow-hidden">
+                <div class="bg-matcha-bg px-5 sm:px-6 py-4 border-b border-matcha-border flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center gap-3">
-                        <span class="text-2xl">🎒</span>
+                        <span class="w-10 h-10 rounded-2xl bg-white border border-matcha-border flex items-center justify-center text-xl shrink-0">🎒</span>
                         <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-[#2E7D32] font-cute">
-                                เช็กลิสต์เตรียมความพร้อมก่อนออกเดินทาง (Pre-Trip Checklist)
+                            <h2 class="text-lg sm:text-xl font-bold text-matcha-text font-cute">
+                                ส่วนที่ 2: เช็กลิสต์เตรียมตัวก่อนออกเดินทาง
                             </h2>
                             <p class="text-xs sm:text-sm text-slate-600">
-                                แตะเพื่อติ๊กเครื่องหมายถูกเมื่อเตรียมของเสร็จแล้ว ระบบจะบันทึกความคืบหน้าไว้ในเบราว์เซอร์อัตโนมัติค่ะ
+                                แตะรายการเพื่อติ๊กเครื่องหมายถูก ระบบจะบันทึกสถานะลงในเครื่องของคุณโดยอัตโนมัติค่ะ
                             </p>
                         </div>
                     </div>
-                    <span id="checklist-badge" class="px-4 py-1 rounded-full bg-white text-[#2E7D32] border border-[#C8E6C9] text-xs sm:text-sm font-cute font-bold">
-                        เตรียมแล้ว 0 / 7 รายการ
+                    <span id="checklist-badge" class="px-4 py-1.5 rounded-full bg-white text-matcha-text border border-matcha-border text-xs sm:text-sm font-cute font-bold">
+                        เตรียมแล้ว 0 / 6 รายการ
                     </span>
                 </div>
 
-                <div class="p-6">
+                <div class="p-5 sm:p-6">
                     <div id="checklist-container" class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-                        <!-- Rendered via JavaScript -->
+                        <!-- Rendered by JavaScript -->
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- =============================================================== -->
-        <!-- SECTION 3: 4-DAY DETAILED ITINERARY TIMELINE                    -->
+        <!-- SECTION 3: ตารางการเดินทางแบบละเอียด 4 วัน 3 คืน                  -->
         <!-- =============================================================== -->
         <section id="section-itinerary" class="space-y-6">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-1">
-                <div class="flex items-center gap-3">
-                    <div class="w-11 h-11 rounded-2xl bg-[#FFF9DB] border-2 border-[#FFF59D] flex items-center justify-center text-xl shadow-2xs">
-                        🗓️
-                    </div>
-                    <div>
-                        <h2 class="text-xl sm:text-2xl font-bold text-slate-800 font-cute">
-                            ตารางเวลาท่องเที่ยวแบบละเอียดทั้ง 4 วัน (ปรับเส้นทางให้สมูทและถ่ายรูปสวยที่สุด)
-                        </h2>
-                        <p class="text-xs sm:text-sm text-slate-500">
-                            แสดงเวลา ระยะทางเต็ม เหตุผลการปรับตาราง และสิ่งที่ต้องเตรียมในแต่ละสถานที่ครบถ้วน พร้อมปุ่มนำทาง Google Maps
-                        </p>
-                    </div>
+            <div class="flex items-start sm:items-center gap-3 px-1">
+                <div class="w-12 h-12 rounded-2xl bg-butter-bg border-2 border-butter-border flex items-center justify-center text-2xl shrink-0 shadow-2xs">
+                    🗓️
+                </div>
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800 font-cute leading-snug">
+                        ส่วนที่ 3: ตารางการเดินทางแบบละเอียด 4 วัน 3 คืน
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500">
+                        ปรับเวลาให้ตรงกับเที่ยวบินสายการบินไทยแอร์เอเชีย (ขาไป 10:00 น. / ขากลับ 15:50 น.) พร้อมตารางวันที่ 3 และวันที่ 4 ฉบับอัปเดตล่าสุด
+                    </p>
                 </div>
             </div>
 
-            <!-- Day Filter Pills -->
-            <div class="bg-white p-2.5 rounded-3xl border-2 border-amber-100 shadow-2xs flex flex-wrap items-center gap-2 no-print">
-                <button onclick="filterDay('all')" id="day-pill-all" class="day-pill px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-bold transition cursor-pointer bg-[#FFF0EB] text-[#E65100] border border-[#FFCCBC]">
-                    🌈 แสดงทั้งหมดทุกวัน (วันที่ 1 - วันที่ 4)
+            <!-- Static Day Filter Pills (Non-sticky) -->
+            <div class="bg-white p-3 rounded-3xl border-2 border-amber-100 shadow-2xs flex flex-wrap items-center gap-2 no-print">
+                <button type="button" onclick="filterDay('all')" id="day-pill-all" class="day-pill px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-bold transition cursor-pointer bg-peach-bg text-peach-text border border-peach-border">
+                    🌈 แสดงครบทุกวัน (วันที่ 1 - วันที่ 4)
                 </button>
-                <button onclick="filterDay('day1')" id="day-pill-day1" class="day-pill px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-semibold transition cursor-pointer bg-slate-50 text-slate-600 hover:bg-amber-50 border border-transparent">
-                    🐑 วันที่ 1 (วันพฤหัสบดีที่ 26 พฤศจิกายน 2026)
+                <button type="button" onclick="filterDay('day1')" id="day-pill-day1" class="day-pill px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-semibold transition cursor-pointer bg-slate-50 text-slate-600 hover:bg-butter-bg border border-transparent">
+                    🐑 วันที่ 1 (วันพฤหัสบดีที่ 26 พฤศจิกายน)
                 </button>
-                <button onclick="filterDay('day2')" id="day-pill-day2" class="day-pill px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-semibold transition cursor-pointer bg-slate-50 text-slate-600 hover:bg-amber-50 border border-transparent">
-                    👘 วันที่ 2 (วันศุกร์ที่ 27 พฤศจิกายน 2026)
+                <button type="button" onclick="filterDay('day2')" id="day-pill-day2" class="day-pill px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-semibold transition cursor-pointer bg-slate-50 text-slate-600 hover:bg-peach-bg border border-transparent">
+                    👘 วันที่ 2 (วันศุกร์ที่ 27 พฤศจิกายน)
                 </button>
-                <button onclick="filterDay('day3')" id="day-pill-day3" class="day-pill px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-semibold transition cursor-pointer bg-slate-50 text-slate-600 hover:bg-amber-50 border border-transparent">
-                    🛕 วันที่ 3 (วันเสาร์ที่ 28 พฤศจิกายน 2026)
+                <button type="button" onclick="filterDay('day3')" id="day-pill-day3" class="day-pill px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-semibold transition cursor-pointer bg-slate-50 text-slate-600 hover:bg-matcha-bg border border-transparent">
+                    🛕 วันที่ 3 (วันเสาร์ที่ 28 พฤศจิกายน)
                 </button>
-                <button onclick="filterDay('day4')" id="day-pill-day4" class="day-pill px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-semibold transition cursor-pointer bg-slate-50 text-slate-600 hover:bg-amber-50 border border-transparent">
-                    🦢 วันที่ 4 (วันอาทิตย์ที่ 29 พฤศจิกายน 2026)
+                <button type="button" onclick="filterDay('day4')" id="day-pill-day4" class="day-pill px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-semibold transition cursor-pointer bg-slate-50 text-slate-600 hover:bg-skyPastel-bg border border-transparent">
+                    🧺 วันที่ 4 (วันอาทิตย์ที่ 29 พฤศจิกายน)
                 </button>
             </div>
 
             <!-- Timeline Cards Container -->
             <div id="timeline-container" class="space-y-8">
-                <!-- Rendered via JavaScript -->
+                <!-- Rendered by JavaScript -->
             </div>
         </section>
 
@@ -727,518 +900,534 @@
 
     <!-- Cute Footer -->
     <footer class="max-w-5xl mx-auto px-4 pt-12 pb-6 text-center">
-        <div class="bg-white/80 rounded-3xl p-5 border border-amber-100 text-xs sm:text-sm text-slate-500 space-y-1">
+        <div class="bg-white/90 rounded-3xl p-5 border-2 border-amber-100 text-xs sm:text-sm text-slate-500 space-y-1.5 shadow-2xs">
             <div class="font-cute font-bold text-slate-700 text-base">
-                ✨ ขอให้เดินทางปลอดภัย เที่ยวเชียงใหม่และลำพูนให้สนุกและได้รูปสวยๆ ตลอดทริปนะคะ! ✨
+                ✨ ขอให้เดินทางปลอดภัย เที่ยวเชียงใหม่และลำพูนอย่างมีความสุข และได้ภาพสวยๆ กลับมาเพียบเลยนะคะ! ✨
             </div>
-            <p>ตารางทริปฉบับสมบูรณ์ วันที่ 26 - 29 พฤศจิกายน 2026 • บันทึกข้อมูลเช็กลิสต์อัตโนมัติในเครื่องของคุณ</p>
+            <p>
+                ตารางทริปเชียงใหม่ - ลำพูน 4 วัน 3 คืน (วันที่ 26 - 29 พฤศจิกายน 2026) • บันทึกความคืบหน้าเช็กลิสต์อัตโนมัติในเบราว์เซอร์ของคุณ
+            </p>
         </div>
     </footer>
 
     <script>
         // =========================================================================
-        // 1. COMPLETE TRIP DATA (ZERO TRUNCATION, FULL THAI NAMES & UNITS)
+        // 1. COMPLETE TRIP DATA (ACCURATE AIRASIA TIMES & UPDATED DAY 3 / DAY 4)
         // =========================================================================
-        const STORAGE_KEY = 'cm_lp_trip_2026_checked_v1';
+        const STORAGE_KEY = 'cm_lp_trip_2026_airasia_v2';
 
         const checklistData = [
             {
+                id: 'chk-airasia-checkin',
+                emoji: '📱',
+                badge: 'ทำได้เลยตั้งแต่วันนี้',
+                badgeStyle: 'bg-skyPastel-bg text-skyPastel-text border-skyPastel-border',
+                title: 'กดเช็กอินออนไลน์สายการบินไทยแอร์เอเชีย (แอปพลิเคชัน AirAsia MOVE) และเซฟ E-Boarding Pass ไว้ในมือถือ',
+                desc: 'สายการบินไทยแอร์เอเชียเปิดให้เช็กอินออนไลน์ล่วงหน้าได้สูงสุด 14 วันก่อนเดินทาง สามารถกดเช็กอินรับบัตรโดยสารอิเล็กทรอนิกส์ไว้ในมือถือได้ทันที'
+            },
+            {
+                id: 'chk-id-driver',
+                emoji: '🪪',
+                badge: 'เอกสารสำคัญ',
+                badgeStyle: 'bg-butter-bg text-amber-900 border-butter-border',
+                title: 'เตรียมบัตรประชาชนตัวจริง และใบขับขี่ตัวจริง (หรือเปิดแอปพลิเคชัน DLT QR Licence)',
+                desc: 'ใช้ยืนยันตัวตนก่อนขึ้นเครื่องบินภายในประเทศ และใช้ประกอบการทำสัญญารับรถเช่าที่เคาน์เตอร์ AVIS ท่าอากาศยานนานาชาติเชียงใหม่'
+            },
+            {
                 id: 'chk-visa-6622',
                 emoji: '💳',
-                title: 'บัตรเครดิต Visa ตัวจริงใบที่ลงท้ายด้วยหมายเลข 6622',
-                desc: 'สำคัญที่สุด! ต้องนำบัตรเครดิตใบจริงที่ตรงกับใบเสร็จ (492141XXXXXX6622) ไปแสดงที่เคาน์เตอร์ AVIS เพื่อรูดกันวงเงินมัดจำประมาณ 5,000 - 8,000 บาท',
                 badge: 'ห้ามลืมเด็ดขาด',
-                badgeStyle: 'bg-rose-100 text-rose-700 border-rose-200'
-            },
-            {
-                id: 'chk-id-license',
-                emoji: '🪪',
-                title: 'บัตรประจำตัวประชาชนตัวจริง และใบอนุญาตขับขี่รถยนต์ตัวจริง',
-                desc: 'ใช้สำหรับแสดงตนในการขึ้นเครื่องบินภายในประเทศ และใช้ทำสัญญาเช่ารถยนต์ที่เคาน์เตอร์ AVIS ท่าอากาศยานนานาชาติเชียงใหม่',
-                badge: 'เอกสารสำคัญ',
-                badgeStyle: 'bg-amber-100 text-amber-800 border-amber-200'
-            },
-            {
-                id: 'chk-online-checkin',
-                emoji: '📱',
-                title: 'กดเช็กอินออนไลน์ล่วงหน้า และบันทึกบัตรโดยสารอิเล็กทรอนิกส์ (E-Boarding Pass)',
-                desc: 'ระบบเปิดให้เช็กอินล่วงหน้า 24 ชั่วโมง ถึง 14 วันก่อนเดินทาง แนะนำให้กดเช็กอินผ่านแอปพลิเคชันสายการบินตั้งแต่เช้าวันพุธที่ 25 พฤศจิกายน 2026',
-                badge: 'ทำเช้าวันที่ 25 พฤศจิกายน',
-                badgeStyle: 'bg-sky-100 text-sky-800 border-sky-200'
+                badgeStyle: 'bg-rose-100 text-rose-700 border-rose-200',
+                title: 'พกบัตรเครดิต Visa ตัวจริงใบที่ลงท้ายด้วย 6622 (สำหรับรูดกันวงเงินมัดจำรถเช่า AVIS)',
+                desc: 'หมายเลขบัตร 492141XXXXXX6622 ต้องเป็นบัตรตัวจริงเพื่อใช้รูดกันวงเงินมัดจำประมาณ 5,000 - 8,000 บาทที่หน้าเคาน์เตอร์ AVIS'
             },
             {
                 id: 'chk-vouchers',
                 emoji: '🧾',
-                title: 'บันทึกภาพหน้าจอใบเสร็จรถเช่า AVIS และใบยืนยันการจองโรงแรมทั้ง 3 คืน',
-                desc: 'เตรียมหมายเลขใบแจ้งหนี้ AVIS (TW2699019260EAE) และใบจองโรงแรม S48 River Ping Hotel, Zensala Riverpark Resort และ Wintree City Resort Chiang Mai',
                 badge: 'หลักฐานการจอง',
-                badgeStyle: 'bg-purple-100 text-purple-800 border-purple-200'
+                badgeStyle: 'bg-lavender-bg text-lavender-text border-lavender-border',
+                title: 'แคปหน้าจอใบเสร็จ AVIS (หมายเลข TW2699019260EAE) และใบยืนยันการจองโรงแรมทั้ง 3 คืน',
+                desc: 'เตรียมข้อมูลใบจอง S48 River Ping, Zensala Riverpark Resort และ Wintree City Resort Chiang Mai ไว้ในอัลบั้มรูปเพื่อให้เปิดแสดงได้แม้ไม่มีสัญญาณอินเทอร์เน็ต'
             },
             {
-                id: 'chk-camera-power',
-                emoji: '📸',
-                title: 'กล้องถ่ายภาพ เมมโมรี่การ์ด แบตเตอรี่สำรอง (Power Bank) และสายชาร์จ',
-                desc: 'ชาร์จแบตเตอรี่ให้เต็มทุกอุปกรณ์สำหรับถ่ายภาพฟาร์มแกะ ชุดล้านนาเมืองเก่าลำพูน วัดต้นเกว๋น แสงเย็นอ่างแก้ว และสวนสาธารณะองค์การบริหารส่วนจังหวัดเชียงใหม่',
-                badge: 'อุปกรณ์ถ่ายภาพ',
-                badgeStyle: 'bg-indigo-100 text-indigo-800 border-indigo-200'
-            },
-            {
-                id: 'chk-sunglasses-inner',
+                id: 'chk-sunglasses-jacket',
                 emoji: '🕶️',
-                title: 'แว่นกันแดด หมวก ร่มพับ และเสื้อซับในหรือเสื้อกล้ามบางๆ',
-                desc: 'แว่นกันแดดสำหรับใส่บนเครื่องบินที่นั่งแถวที่ 26 ฝั่งขวาขาไปตอนเช้า ส่วนเสื้อซับในบางๆ ช่วยให้สวมทับชุดพื้นเมืองล้านนาที่ลำพูนและวัดต้นเกว๋นได้สะดวกสบาย',
                 badge: 'เครื่องแต่งกาย',
-                badgeStyle: 'bg-orange-100 text-orange-800 border-orange-200'
+                badgeStyle: 'bg-peach-bg text-peach-text border-peach-border',
+                title: 'พกแว่นกันแดดติดกระเป๋าขึ้นเครื่อง (สำหรับที่นั่งแถว 26 ฝั่งขวา) และเสื้อคลุมกันลมหนาวช่วงเช้า-เย็น',
+                desc: 'ช่วยกันแดดเฉียงช่วงสายบนเครื่องบินขาไป และให้ความอบอุ่นช่วงเช้าตรู่และช่วงเย็นปลายเดือนพฤศจิกายนที่เชียงใหม่และลำพูน'
             },
             {
-                id: 'chk-cash',
+                id: 'chk-small-cash',
                 emoji: '💵',
-                title: 'เตรียมธนบัตรและเงินสดย่อยติดกระเป๋า',
-                desc: 'สำหรับชำระค่าเข้าฮักแกะฟาร์ม (ท่านละ 100 บาท) ค่าเช่าชุดพื้นเมืองล้านนาพร้อมค่ามัดจำชุด (ประมาณ 150 - 300 บาท) และร้านค้าสตรีทฟู้ดริมคลองแม่ข่า',
                 badge: 'เงินสดย่อย',
-                badgeStyle: 'bg-emerald-100 text-emerald-800 border-emerald-200'
+                badgeStyle: 'bg-matcha-bg text-matcha-text border-matcha-border',
+                title: 'เตรียมเงินสดย่อยสำหรับค่าเข้าชมฟาร์มแกะ ค่าเช่าชุดพื้นเมืองลำพูน และร้านค้าในคลองแม่ข่า / จริงใจมาร์เก็ต',
+                desc: 'เตรียมธนบัตรย่อยสำหรับค่าเข้าฮักแกะ 100 บาท ค่าเช่าชุดพร้อมมัดจำประมาณ 150 - 300 บาท และของกินสตรีทฟู้ดตามตลาดนัด'
             }
         ];
 
         const itineraryDays = [
             {
                 dayId: 'day1',
-                dayNumber: 'วันที่ 1 ของการเดินทาง',
+                dayNumber: 'วันที่ 1',
                 dateText: 'วันพฤหัสบดีที่ 26 พฤศจิกายน 2026',
                 emoji: '✈️🐑🏮',
-                title: 'รับรถเช่า เที่ยวฟาร์มแกะอำเภอแม่ออน และเดินเล่นย่านเมืองเก่าเชียงใหม่ - คลองแม่ข่า',
-                subtitle: 'เส้นทาง: ท่าอากาศยานนานาชาติเชียงใหม่ ➔ ฮักแกะ Cafe and Farm ➔ S48 River Ping Hotel ➔ ถนนช้างม่อย ➔ ประตูท่าแพ ➔ คลองแม่ข่า',
-                themeBg: 'bg-[#FFF9DB]',
-                themeBorder: 'border-[#FFF59D]',
-                themeText: 'text-[#F57F17]',
+                title: 'เดินทางสู่เชียงใหม่ - แม่ออน - โซนท่าแพและคลองแม่ข่า',
+                subtitle: 'ท่าอากาศยานดอนเมือง ➔ ท่าอากาศยานนานาชาติเชียงใหม่ ➔ ฮักแกะ Cafe and Farm ➔ S48 River Ping ➔ ถนนช้างม่อย ➔ ประตูท่าแพและคูเมือง ➔ คลองแม่ข่า',
+                themeBg: 'bg-butter-bg',
+                themeBorder: 'border-butter-border',
+                themeText: 'text-amber-900',
                 items: [
                     {
                         id: 'd1-1',
-                        time: '04:30 น.',
+                        time: '06:45 น.',
                         emoji: '⏰',
-                        title: 'ตื่นนอน อาบน้ำแต่งตัว และตรวจสอบสัมภาระรอบสุดท้ายก่อนออกจากบ้าน',
+                        title: 'ตื่นนอนและเตรียมความพร้อม',
                         category: 'เตรียมตัวตอนเช้า',
                         catStyle: 'bg-slate-100 text-slate-700',
-                        desc: 'ตรวจสอบกระเป๋าเดินทาง บัตรประจำตัวประชาชน ใบอนุญาตขับขี่รถยนต์ และบัตรเครดิต Visa ใบที่ลงท้ายด้วยหมายเลข 6622 ให้ครบถ้วนก่อนออกเดินทาง'
+                        desc: 'เช็กสัมภาระ เอกสาร บัตรเครดิต Visa 6622 และอุปกรณ์ถ่ายภาพรอบสุดท้ายก่อนออกจากที่พัก'
                     },
                     {
                         id: 'd1-2',
-                        time: '05:15 น.',
+                        time: '07:30 น.',
                         emoji: '🚕',
-                        title: 'ออกเดินทางจากที่พักมุ่งหน้าสู่สนามบินในกรุงเทพมหานคร',
+                        title: 'ออกเดินทางไปท่าอากาศยานดอนเมือง (DMK)',
                         category: 'เดินทางไปสนามบิน',
-                        catStyle: 'bg-sky-100 text-sky-800',
-                        desc: 'การเดินทางในช่วงเช้ามืดสภาพการจราจรคล่องตัว ใช้เวลาเดินทางประมาณ 30 - 40 นาทีถึงสนามบิน'
+                        catStyle: 'bg-skyPastel-bg text-skyPastel-text',
+                        mapQuery: 'ท่าอากาศยานดอนเมือง อาคารผู้โดยสารภายในประเทศ',
+                        desc: 'เผื่อเวลารถติดเช้าวันพฤหัสบดี ควรเดินทางถึงสนามบินประมาณเวลา 08:15 - 08:30 น.'
                     },
                     {
                         id: 'd1-3',
-                        time: '05:50 น.',
+                        time: '08:30 น.',
                         emoji: '🧳',
-                        title: 'เดินทางถึงสนามบิน โหลดกระเป๋าสัมภาระ และเดินไปรอที่หน้าประตูขึ้นเครื่อง (Gate) ขาออกภายในประเทศ',
-                        category: 'ขั้นตอนสนามบิน',
+                        title: 'ถึงท่าอากาศยานดอนเมือง (อาคารผู้โดยสารภายในประเทศ)',
+                        category: 'เช็กอินและโหลดกระเป๋า',
                         catStyle: 'bg-rose-100 text-rose-800',
-                        desc: 'ดำเนินการโหลดสัมภาระและผ่านจุดตรวจค้นร่างกายและสัมภาระติดตัวเพื่อเข้าสู่พื้นที่ผู้โดยสารขาออกภายในประเทศ',
-                        noteTitle: '📌 กฎเวลาสำคัญในการโหลดกระเป๋าและขึ้นเครื่องบิน (Boarding Rules)',
-                        noteText: 'ต้องโหลดกระเป๋าสัมภาระใต้ท้องเครื่องให้เสร็จสิ้นก่อนเวลาเครื่องออกอย่างน้อย 45 นาที • ประตูทางออกขึ้นเครื่อง (Gate) จะเปิดเรียกผู้โดยสารขึ้นเครื่อง (Boarding Time) ก่อนเวลาบิน 30 - 40 นาที • ประตูเครื่องบินจะปิด (Gate Close) ก่อนเวลาเครื่องออก 15 - 20 นาที'
+                        mapQuery: 'ท่าอากาศยานดอนเมือง อาคาร 2 ภายในประเทศ',
+                        desc: 'หากมีสัมภาระโหลดใต้ท้องเครื่อง ต้องโหลดให้เสร็จก่อนเวลา 09:15 น. (45 นาทีก่อนเครื่องออก) จากนั้นผ่านจุดตรวจค้นไปรอหน้าประตูทางออกขึ้นเครื่อง (Gate)'
                     },
                     {
                         id: 'd1-4',
-                        time: '07:15 - 08:35 น.',
-                        emoji: '🛫',
-                        title: 'ออกเดินทางโดยสายการบินมุ่งหน้าสู่ ท่าอากาศยานนานาชาติเชียงใหม่ (ที่นั่งแถวที่ 26 ฝั่งขวา)',
-                        category: 'เที่ยวบินขาไปช่วงเช้า',
-                        catStyle: 'bg-sky-100 text-sky-800',
-                        desc: 'ใช้เวลาทำการบินประมาณ 1 ชั่วโมง 15 นาที ถึงท่าอากาศยานนานาชาติเชียงใหม่',
-                        noteTitle: '☀️ สิ่งที่ต้องเตรียมสำหรับที่นั่งแถวที่ 26 ฝั่งขวา (เที่ยวบินเช้า)',
-                        noteText: 'ที่นั่งแถวที่ 26 มีหน้าต่างชมวิวชัดเจน ในเดือนพฤศจิกายนพระอาทิตย์ขึ้นทางทิศตะวันออกเฉียงใต้ แสงแดดยามเช้าจะส่องเฉียงเข้ามาทางฝั่งขวา แนะนำให้หยิบแว่นกันแดดติดตัวขึ้นเครื่อง และดึงม่านหน้าต่างลงบางส่วนเมื่อแดดจ้า'
+                        time: '09:20 น.',
+                        emoji: '🛂',
+                        title: 'เรียกขึ้นเครื่อง (Boarding Time)',
+                        category: 'เตรียมขึ้นเครื่องบิน',
+                        catStyle: 'bg-peach-bg text-peach-text',
+                        desc: 'เตรียม E-Boarding Pass จากแอปพลิเคชัน AirAsia MOVE และบัตรประชาชนตัวจริง',
+                        noteTitle: '🚪 เวลาปิดประตูขึ้นเครื่อง (Gate Close)',
+                        noteText: 'ประตูทางออกขึ้นเครื่อง (Gate) ปิดเวลา 09:40 น. (20 นาทีก่อนเครื่องออก) กรุณามารอที่หน้าประตูให้ทันเวลาอย่างเคร่งครัด'
                     },
                     {
                         id: 'd1-5',
-                        time: '08:45 - 09:30 น.',
-                        emoji: '🔑',
-                        title: 'รับกระเป๋าสัมภาระ และติดต่อรับรถเช่าที่เคาน์เตอร์ AVIS ภายในอาคารผู้โดยสารขาเข้าภายในประเทศ',
-                        category: 'รับรถเช่า AVIS',
-                        catStyle: 'bg-amber-100 text-amber-900',
-                        mapQuery: 'Chiang Mai International Airport',
-                        desc: 'เคาน์เตอร์ AVIS ตั้งอยู่ภายในอาคารผู้โดยสารสนามบินเชียงใหม่ สามารถเดินลากกระเป๋าไปติดต่อรับรถได้ทันทีโดยสะดวก',
-                        noteTitle: '🚗 เอกสารและสิ่งที่ต้องทำตอนรับรถเช่า AVIS',
-                        noteText: 'แสดงบัตรประชาชน + ใบขับขี่ตัวจริง + บัตรเครดิต Visa ตัวจริงลงท้ายด้วยหมายเลข 6622 (สำหรับรูดกันวงเงินมัดจำ) พร้อมแจ้งหมายเลขใบแจ้งหนี้ TW2699019260EAE • แนะนำให้ซื้อประกันภัยเสริมชั้น 1 แบบไม่มีค่าเสียหายส่วนแรก (SCDW) ที่หน้าเคาน์เตอร์ • ถ่ายคลิปวิดีโอรอบตัวรถและถ่ายภาพระดับน้ำมันบนหน้าปัดเก็บไว้ก่อนขับออก'
+                        time: '10:00 - 11:15 น.',
+                        emoji: '🛫',
+                        title: 'เที่ยวบินตรง Thai AirAsia (ท่าอากาศยานดอนเมือง - ท่าอากาศยานนานาชาติเชียงใหม่)',
+                        category: 'บินตรง 1 ชั่วโมง 15 นาที',
+                        catStyle: 'bg-skyPastel-bg text-skyPastel-text',
+                        desc: 'ใช้เวลาเดินทาง 1 ชั่วโมง 15 นาที ที่นั่งแถว 26 ฝั่งขวา (พกแว่นกันแดดติดกระเป๋าเผื่อแสงแดดเฉียงช่วงสาย)'
                     },
                     {
                         id: 'd1-6',
-                        time: '09:30 - 10:30 น.',
-                        emoji: '🛣️',
-                        title: 'ขับรถจากท่าอากาศยานนานาชาติเชียงใหม่ มุ่งหน้าสู่อำเภอแม่ออน (ระยะทางประมาณ 45 กิโลเมตร)',
-                        category: 'ขับรถ 45 กิโลเมตร',
-                        catStyle: 'bg-emerald-100 text-emerald-800',
-                        desc: 'ขับไปตามเส้นทางถนนสันกำแพงสายใหม่ (ทางหลวงหมายเลข 1317) ถนนขนาด 4 ช่องจราจรกว้างขวางและขับง่ายมาก ใช้เวลาเดินทางประมาณ 1 ชั่วโมง'
+                        time: '11:15 - 12:00 น.',
+                        emoji: '🔑',
+                        title: 'รับกระเป๋าและรับรถเช่าที่เคาน์เตอร์ AVIS ท่าอากาศยานนานาชาติเชียงใหม่',
+                        category: 'รับรถเช่า AVIS',
+                        catStyle: 'bg-butter-bg text-amber-900',
+                        mapQuery: 'AVIS Rent A Car ท่าอากาศยานนานาชาติเชียงใหม่',
+                        desc: 'เดินไปยังเคาน์เตอร์ AVIS ภายในอาคารผู้โดยสารขาเข้าภายในประเทศเพื่อทำสัญญารับรถยนต์',
+                        noteTitle: '🚗 โน้ตสำคัญตอนรับรถเช่า AVIS',
+                        noteText: 'แสดงใบเสร็จหมายเลข TW2699019260EAE และบัตรเครดิต Visa 6622 (ตัวจริง) • แจ้งซื้อประกันเสริม SCDW (ประกันชั้น 1 แบบไม่มีค่าเสียหายส่วนแรก) • ถ่ายวิดีโอรอบคันรถพร้อมหน้าปัดระดับน้ำมันเก็บไว้เป็นหลักฐานก่อนขับออก'
                     },
                     {
                         id: 'd1-7',
-                        time: '10:30 - 12:30 น.',
-                        emoji: '🐑',
-                        title: 'เที่ยวชมและถ่ายภาพกับน้องแกะที่ ฮักแกะ Cafe and Farm (อำเภอแม่ออน จังหวัดเชียงใหม่)',
-                        category: 'คาเฟ่และฟาร์มแกะ',
-                        catStyle: 'bg-amber-100 text-amber-800',
-                        mapQuery: 'ฮักแกะ Cafe and Farm เชียงใหม่',
-                        desc: 'เพลิดเพลินกับทุ่งหญ้าเนินเขา ให้อาหารฝูงแกะขนปุย และนั่งจิบเครื่องดื่มเย็นๆ ชมวิวธรรมชาติของอำเภอแม่ออน',
-                        noteTitle: '👒 สิ่งที่ต้องเตรียมและข้อควรรู้ที่ ฮักแกะ Cafe and Farm',
-                        noteText: 'ค่าบัตรเข้าชมท่านละ 100 บาท (อย่าลืมเก็บหางบัตรไว้ เพราะสามารถนำไปใช้เป็นส่วนลดค่าเครื่องดื่มได้ 20 บาท ส่วนลดขนมเค้ก 10 บาท และแลกอาหารน้องแกะได้ 20 บาท) • ช่วงสายแสงแดดจะเริ่มแรง แนะนำให้พกหมวก ร่ม หรือแว่นกันแดด และระมัดระวังน้องแกะกระโดดเกาะเสื้อผ้าขณะถือถ้วยอาหาร'
+                        time: '12:00 - 13:00 น.',
+                        emoji: '🛣️',
+                        title: 'ขับรถมุ่งหน้าสู่อำเภอแม่ออน',
+                        distance: 'ระยะทาง 45 กิโลเมตร',
+                        category: 'ขับรถ 1 ชั่วโมง',
+                        catStyle: 'bg-matcha-bg text-matcha-text',
+                        mapQuery: 'ถนนสันกำแพงสายใหม่ เชียงใหม่',
+                        desc: 'ใช้เส้นทางถนนสันกำแพงสายใหม่ ถนนกว้างขับสบาย ใช้เวลาเดินทางประมาณ 1 ชั่วโมง สามารถแวะทานมื้อเที่ยงระหว่างทางหรือทานที่ฟาร์มได้เลย'
                     },
                     {
                         id: 'd1-8',
-                        time: '12:30 - 13:45 น.',
-                        emoji: '🍜',
-                        title: 'ขับรถกลับเข้าเขตอำเภอเมืองเชียงใหม่ (ระยะทางประมาณ 45 กิโลเมตร) และแวะรับประทานอาหารกลางวัน',
-                        category: 'มื้อกลางวัน',
-                        catStyle: 'bg-orange-100 text-orange-800',
-                        desc: 'แวะรับประทานอาหารกลางวันระหว่างเส้นทางถนนสันกำแพงสายใหม่ หรือย่านถนนเจริญราษฎร์ริมแม่น้ำปิง'
+                        time: '13:00 - 14:45 น.',
+                        emoji: '🐑',
+                        title: 'ฮักแกะ Cafe and Farm (อำเภอแม่ออน จังหวัดเชียงใหม่)',
+                        category: 'คาเฟ่และฟาร์มแกะ',
+                        catStyle: 'bg-peach-bg text-peach-text',
+                        mapQuery: 'ฮักแกะ Cafe and Farm เชียงใหม่',
+                        desc: 'ถ่ายรูปเล่นกับฝูงน้องแกะท่ามกลางทุ่งหญ้าเนินเขา และพักจิบเครื่องดื่มเย็นๆ ชมธรรมชาติ',
+                        noteTitle: '👒 ข้อมูลค่าเข้าชมและการเตรียมตัวที่ ฮักแกะ Cafe and Farm',
+                        noteText: 'ค่าเข้าชมคนละ 100 บาท (เก็บหางบัตรไว้ใช้เป็นส่วนลดเครื่องดื่ม 20 บาท ส่วนลดขนมเค้ก 10 บาท และแลกอาหารน้องแกะได้ 20 บาท) • แนะนำพกร่มหรือหมวก และใส่เสื้อผ้าที่ซักง่ายเผื่อน้องแกะกระโดดเกาะตอนให้อาหาร'
                     },
                     {
                         id: 'd1-9',
-                        time: '14:00 - 15:45 น.',
+                        time: '14:45 - 15:45 น.',
                         emoji: '🏨',
-                        title: 'เช็คอินเข้าสู่ที่พักคืนแรก S48 River Ping Hotel (ถนนเจริญราษฎร์ ตำบลฟ้าฮ่าม อำเภอเมืองเชียงใหม่)',
-                        category: 'เช็คอินที่พักคืนที่ 1',
-                        catStyle: 'bg-purple-100 text-purple-800',
-                        mapQuery: 'S48 River Ping Hotel Chiang Mai',
-                        desc: 'เข้าเช็คอินได้ตั้งแต่เวลา 14:00 น. เป็นต้นไป เก็บสัมภาระและพักผ่อนตากแอร์หลบแดดช่วงบ่ายในโรงแรมระดับ 5 ดาวริมแม่น้ำปิง'
+                        title: 'ขับรถกลับเข้าเมืองและเช็กอิน S48 River Ping',
+                        distance: 'ระยะทาง 45 กิโลเมตร',
+                        category: 'เช็กอินที่พักคืนที่ 1',
+                        catStyle: 'bg-lavender-bg text-lavender-text',
+                        mapQuery: 'S48 River Ping 427 ถนนเจริญราษฎร์ เชียงใหม่',
+                        desc: 'เช็กอินเข้าพักได้พอดี (หลังเวลา 14:00 น.) พักผ่อนตากแอร์ล้างหน้าและเปลี่ยนชุดเตรียมออกเดินเล่นช่วงเย็น'
                     },
                     {
                         id: 'd1-10',
-                        time: '16:00 - 17:45 น.',
+                        time: '16:15 - 17:45 น.',
                         emoji: '🧺',
-                        title: 'ถ่ายภาพที่ ถนนช้างม่อย (ร้านจักสานหวาย) เดินเลียบคูเมืองเชียงใหม่ ไปยัง ลานประตูท่าแพ',
-                        category: 'จุดถ่ายภาพยอดฮิต',
+                        title: 'ถนนช้างม่อย - ประตูท่าแพ - คูเมืองเชียงใหม่',
+                        distance: 'ระยะทาง 4.4 - 7.3 กิโลเมตร',
+                        category: 'จุดถ่ายรูปเมืองเก่า',
                         catStyle: 'bg-pink-100 text-pink-800',
-                        mapQuery: 'ประตูท่าแพ เชียงใหม่',
-                        desc: 'ขับรถจากโรงแรมเข้าตัวเมืองระยะทางประมาณ 4.4 กิโลเมตร แวะถ่ายภาพหน้าร้านเครื่องจักสานถนนช้างม่อย (ระยะทางเดินเชื่อมประมาณ 650 เมตร) และเดินชมบรรยากาศคูเมืองเชียงใหม่ไปยังลานประตูท่าแพ (ระยะทางประมาณ 500 เมตร)',
-                        noteTitle: '✨ เหตุผลการปรับตาราง (รวบจุดเดินชมเมืองเก่าให้สมูท)',
-                        noteText: 'รวมจุด "คูเมืองเชียงใหม่" เข้าเป็นเส้นทางเดินต่อเนื่องระหว่างถนนช้างม่อยและประตูท่าแพ เพื่อไม่ต้องวนหาที่จอดรถหลายรอบ โดยช่วงเวลา 16:30 - 17:30 น. แสงแดดยามเย็นที่ลานกำแพงเมืองประตูท่าแพจะนุ่มนวลและถ่ายภาพพอร์ตเทรตได้สวยที่สุด'
+                        mapQuery: 'ถนนช้างม่อย ร้านจักสาน ประตูท่าแพ เชียงใหม่',
+                        desc: 'เริ่มถ่ายรูปชิคๆ ที่ร้านจักสานหวายถนนช้างม่อย แล้วเดินเลียบคูเมืองเชียงใหม่ (ระยะทาง 650 เมตร) ต่อไปถ่ายรูปแสงเย็นที่ลานประตูท่าแพ (แสงช่วงเวลา 16:45 - 17:30 น. นุ่มและสวยมาก)'
                     },
                     {
                         id: 'd1-11',
                         time: '18:00 - 20:00 น.',
                         emoji: '🏮',
-                        title: 'เดินเล่นชมโคมไฟยามค่ำคืนและหาของกินสตรีทฟู้ดที่ คลองแม่ข่า (ระยะทางจากประตูท่าแพประมาณ 1.7 กิโลเมตร)',
+                        title: 'คลองแม่ข่า',
+                        distance: 'ระยะทาง 1.7 กิโลเมตร จากประตูท่าแพ',
                         category: 'เดินเล่นและมื้อเย็น',
                         catStyle: 'bg-rose-100 text-rose-800',
                         mapQuery: 'คลองแม่ข่า เชียงใหม่',
-                        desc: 'คลองแม่ข่าเหมาะกับการมาเดินช่วงเวลา 18:00 น. เป็นต้นไป เพราะอากาศเย็นสบาย ร้านค้าเปิดครบทั้งสองฝั่งคลอง และมีการเปิดไฟประดับสวยงามให้บรรยากาศคล้ายคลองโอตารุ ประเทศญี่ปุ่น จากนั้นขับรถกลับเข้าพักผ่อนที่โรงแรม S48 River Ping Hotel'
+                        desc: 'เดินเล่นถ่ายรูปบรรยากาศโคมไฟยามค่ำคืนสไตล์ญี่ปุ่น และทานอาหารเย็นสตรีทฟู้ดริมคลอง ก่อนขับรถกลับเข้าพักผ่อนที่โรงแรม S48 River Ping',
+                        noteTitle: '💡 หมายเหตุตัวเลือกเสริมสำหรับวันที่ 1',
+                        noteText: 'หากยังมีเวลาเหลือหรืออยากแวะ Joogarood cafe ตั้งแต่บ่ายวันแรก สามารถสลับแวะได้เพื่อลดจำนวนจุดในวันที่ 3 ค่ะ'
                     }
                 ]
             },
             {
                 dayId: 'day2',
-                dayNumber: 'วันที่ 2 ของการเดินทาง',
+                dayNumber: 'วันที่ 2',
                 dateText: 'วันศุกร์ที่ 27 พฤศจิกายน 2026',
                 emoji: '👘🛕☕',
-                title: 'สวมชุดพื้นเมืองล้านนา ไหว้พระธาตุคู่เมือง และเที่ยวคาเฟ่เมืองเก่าจังหวัดลำพูน',
-                subtitle: 'เส้นทาง: S48 River Ping Hotel ➔ เช่าชุดพื้นเมืองลำพูน ➔ วัดพระธาตุหริภุญชัย ➔ PHUN Café ➔ ประตูท่านาง ➔ วัดสันป่ายางหลวง ➔ Judy\'s Home Cafe ➔ Zensala Riverpark Resort',
-                themeBg: 'bg-[#FFF0EB]',
-                themeBorder: 'border-[#FFCCBC]',
-                themeText: 'text-[#E65100]',
+                title: 'แต่งชุดพื้นเมือง เที่ยวเมืองเก่าลำพูน',
+                subtitle: 'S48 River Ping ➔ เช่าชุดพื้นเมืองลำพูน & วัดพระธาตุหริภุญชัย ➔ PHUN Café ➔ ประตูท่านาง & วัดสันป่ายางหลวง ➔ Judy\'s home cafe ➔ Zensala Riverpark Resort',
+                themeBg: 'bg-peach-bg',
+                themeBorder: 'border-peach-border',
+                themeText: 'text-peach-text',
                 items: [
                     {
                         id: 'd2-1',
-                        time: '07:30 - 08:45 น.',
+                        time: '07:30 น.',
                         emoji: '🥐',
-                        title: 'ตื่นนอน รับประทานอาหารเช้าที่โรงแรม และเช็คเอาต์ออกจาก S48 River Ping Hotel',
-                        category: 'มื้อเช้าและเช็คเอาต์',
-                        catStyle: 'bg-amber-100 text-amber-800',
-                        desc: 'รับประทานอาหารเช้า ตรวจสอบสัมภาระในห้องพัก และคืนกุญแจห้องพักก่อนเวลา 08:45 น.'
+                        title: 'ตื่นนอนและทานอาหารเช้าที่โรงแรม S48 River Ping',
+                        category: 'มื้อเช้าที่โรงแรม',
+                        catStyle: 'bg-butter-bg text-amber-900',
+                        desc: 'พักผ่อนรับบรรยากาศริมแม่น้ำปิงยามเช้าและเก็บสัมภาระเตรียมเช็กเอาต์'
                     },
                     {
                         id: 'd2-2',
-                        time: '08:45 - 09:30 น.',
+                        time: '08:45 น.',
                         emoji: '🌳',
-                        title: 'ขับรถมุ่งหน้าลงทางทิศใต้สู่จังหวัดลำพูน (ระยะทางประมาณ 31 กิโลเมตร)',
-                        category: 'ขับรถข้ามจังหวัด 31 กิโลเมตร',
-                        catStyle: 'bg-emerald-100 text-emerald-800',
+                        title: 'เช็กเอาต์และขับรถลงใต้สู่จังหวัดลำพูน',
+                        distance: 'ระยะทาง 31 กิโลเมตร',
+                        category: 'ขับรถข้ามจังหวัด 40 นาที',
+                        catStyle: 'bg-matcha-bg text-matcha-text',
                         mapQuery: 'ถนนสายต้นยาง เชียงใหม่-ลำพูน',
-                        desc: 'ใช้เวลาเดินทางประมาณ 40 นาที สามารถเลือกขับผ่านถนนสายต้นยางนา (ถนนเชียงใหม่-ลำพูน สายเก่า ช่วงอำเภอสารภี) เพื่อชมความงามของอุโมงค์ต้นยางนาสูงใหญ่กว่าร้อยปีตลอดสองข้างทาง หรือวิ่งถนนซุปเปอร์ไฮเวย์ได้ตามความสะดวก'
+                        desc: 'ใช้เวลาเดินทางประมาณ 40 นาที แนะนำวิ่งถนนต้นยางสายเก่าช่วงอำเภอสารภีเพื่อชมวิวต้นยางนา หรือวิ่งถนนซุปเปอร์ไฮเวย์เพื่อทำเวลา'
                     },
                     {
                         id: 'd2-3',
                         time: '09:30 - 11:00 น.',
                         emoji: '👘',
-                        title: 'แวะร้านเช่าชุดพื้นเมืองลำพูน และเข้าไปสักการะพร้อมถ่ายภาพที่ วัดพระธาตุหริภุญชัย วรมหาวิหาร เป็นจุดแรก',
+                        title: 'เช่าชุดพื้นเมืองลำพูน และ วัดพระธาตุหริภุญชัย วรมหาวิหาร',
                         category: 'ไฮไลต์เมืองลำพูน',
-                        catStyle: 'bg-amber-100 text-amber-900',
+                        catStyle: 'bg-peach-bg text-peach-text',
                         mapQuery: 'วัดพระธาตุหริภุญชัย วรมหาวิหาร ลำพูน',
-                        desc: 'เลือกเช่าชุดพื้นเมืองล้านนาสวยๆ บริเวณหน้าวัด แล้วเดินเข้าสู่ลานองค์พระธาตุหริภุญชัยเพื่อกราบสักการะสิ่งศักดิ์สิทธิ์คู่บ้านคู่เมืองลำพูน',
-                        noteTitle: '✨ เหตุผลการปรับตาราง และสิ่งที่ต้องเตรียมสำหรับชุดพื้นเมือง',
-                        noteText: 'สลับคิว "วัดพระธาตุหริภุญชัย วรมหาวิหาร" มาไว้ช่วงเช้าเวลา 09:30 - 11:00 น. แทนช่วงบ่ายในตารางเดิม เพราะแสงแดดยามเช้าจะส่องกระทบองค์พระธาตุสีทองอร่ามสวยงามที่สุด ลานวัดยังไม่ร้อนจัด และนักท่องเที่ยวยังไม่แน่น • แนะนำให้สวมเสื้อซับในหรือเสื้อกล้ามบางๆ มาจากโรงแรมเพื่อให้สวมทับชุดพื้นเมืองได้ง่าย และเตรียมเงินสดสำหรับค่าเช่าชุดและค่ามัดจำประมาณ 150 - 300 บาท'
+                        desc: 'เช่าชุดพื้นเมืองล้านนาสวยๆ แล้วเข้าไปกราบสักการะและถ่ายรูปคู่กับองค์พระธาตุหริภุญชัยสีทองอร่าม',
+                        noteTitle: '✨ โน้ตการปรับลำดับและเตรียมตัวเช่าชุดพื้นเมือง',
+                        noteText: 'ปรับลำดับให้มาไหว้พระธาตุช่วงเช้าเพราะแสงแดดส่องเจดีย์สีทองสวยมาก คนยังไม่แน่นและอากาศไม่ร้อน • เตรียมเงินสดสำหรับค่าเช่าชุดและค่ามัดจำ (ประมาณ 150 - 300 บาท) แนะนำใส่เสื้อซับในบางๆ ด้านในเพื่อความสะดวกในการสวมชุด'
                     },
                     {
                         id: 'd2-4',
                         time: '11:15 - 12:30 น.',
                         emoji: '☕',
-                        title: 'พักหลบแดดช่วงเที่ยงที่ร้าน PHUN Café - พูน คาเฟ่ (ระยะทางห่างจากวัดประมาณ 850 เมตร)',
-                        category: 'คาเฟ่ห้องแอร์',
-                        catStyle: 'bg-orange-100 text-orange-800',
+                        title: 'PHUN Café - พูน คาเฟ่',
+                        distance: 'ระยะทาง 850 เมตร',
+                        category: 'คาเฟ่และมื้อกลางวัน',
+                        catStyle: 'bg-butter-bg text-amber-900',
                         mapQuery: 'PHUN Cafe ลำพูน',
-                        desc: 'พักผ่อนตากแอร์เย็นๆ รับประทานอาหารว่างและเครื่องดื่มกาแฟ-ชาเขียว พร้อมถ่ายภาพในชุดพื้นเมืองล้านนาต่อได้แบบไม่ร้อน'
+                        desc: 'พักหลบแดดช่วงเที่ยงในห้องแอร์เย็นๆ ทานอาหารกลางวันและจิบเครื่องดื่มเติมพลัง'
                     },
                     {
                         id: 'd2-5',
                         time: '12:45 - 14:15 น.',
                         emoji: '🛕',
-                        title: 'ขับรถผ่านชม ประตูท่านาง (ระยะทาง 1.5 กิโลเมตร) และไปไหว้พระที่ วัดสันป่ายางหลวง (ระยะทาง 2.6 กิโลเมตร)',
+                        title: 'ผ่านชมประตูท่านาง และ วัดสันป่ายางหลวง (ครูบาอินทร พระครูปัญญาธรรมวัฒน์)',
+                        distance: 'ระยะทาง 1.5 - 2.6 กิโลเมตร',
                         category: 'วัดสวยล้านนา',
-                        catStyle: 'bg-purple-100 text-purple-800',
-                        mapQuery: 'วัดสันป่ายางหลวง ลำพูน',
-                        desc: 'ชมความวิจิตรงดงามของวิหารไม้แกะสลักปูนปั้นล้านนา และกราบสักการะพระหยกเขียว ณ วัดสันป่ายางหลวง (ครูบาอินทร พระครูปัญญาธรรมวัฒน์ จังหวัดลำพูน)',
-                        noteTitle: '✨ เหตุผลการปรับตารางช่วงบ่าย',
-                        noteText: 'เนื่องจากช่วงเวลา 13:00 น. แดดกลางแจ้งค่อนข้างแรง แนะนำให้ชมกำแพงเมืองเก่า "ประตูท่านาง" ระหว่างขับรถผ่านหรือแวะถ่ายภาพสั้นๆ เพื่อนำเวลาไปเดินชมความงามภายในวิหารของวัดสันป่ายางหลวงที่มีความร่มรื่นและเย็นสบายกว่า'
+                        catStyle: 'bg-lavender-bg text-lavender-text',
+                        mapQuery: 'วัดสันป่ายางหลวง จังหวัดลำพูน',
+                        desc: 'ขับรถผ่านชมประตูท่านาง และเข้าไปชมความงดงามของวิหารไม้แกะสลักและพระหยกเขียว ณ วัดสันป่ายางหลวง ภายในวิหารร่มรื่นเหมาะกับช่วงบ่าย'
                     },
                     {
                         id: 'd2-6',
                         time: '14:30 - 16:00 น.',
                         emoji: '🏡',
-                        title: 'แวะพักผ่อนถ่ายภาพที่ร้าน Judy\'s Home Cafe (ระยะทางประมาณ 700 เมตร) และแวะคืนชุดพื้นเมือง',
+                        title: 'Judy\'s home cafe และนำชุดพื้นเมืองไปคืนร้าน',
+                        distance: 'ระยะทาง 700 เมตร',
                         category: 'คาเฟ่สวนริมน้ำ',
-                        catStyle: 'bg-emerald-100 text-emerald-800',
-                        mapQuery: 'Judy\'s home cafe Lamphun',
-                        desc: 'คาเฟ่สไตล์โฮมมี่ในสวนร่มรื่นริมน้ำ นั่งจิบเครื่องดื่มและขนมโฮมเมดรับลมช่วงบ่ายคล้อย จากนั้นเดินทางไปเปลี่ยนชุดและคืนชุดพื้นเมืองที่ร้านเช่าชุด (ระยะทางห่างจากวัดพระธาตุหริภุญชัยประมาณ 750 เมตร)'
+                        catStyle: 'bg-matcha-bg text-matcha-text',
+                        mapQuery: 'Judy\'s home cafe ลำพูน',
+                        desc: 'นั่งพักผ่อนถ่ายรูปคาเฟ่สวนโฮมมี่บรรยากาศร่มรื่นริมน้ำช่วงแสงบ่ายคล้อย จากนั้นนำชุดพื้นเมืองไปคืนที่ร้านเช่าชุดให้เรียบร้อย'
                     },
                     {
                         id: 'd2-7',
                         time: '16:15 - 17:15 น.',
-                        emoji: '🚗',
-                        title: 'ขับรถเดินทางกลับจากจังหวัดลำพูน เข้าสู่อำเภอเมืองเชียงใหม่ ย่านป่าตัน (ระยะทางประมาณ 35 กิโลเมตร)',
-                        category: 'ขับรถกลับเชียงใหม่ 35 กิโลเมตร',
-                        catStyle: 'bg-sky-100 text-sky-800',
-                        desc: 'เดินทางกลับเข้าสู่ตัวเมืองเชียงใหม่โซนริมแม่น้ำปิง ตำบลป่าตัน ใช้เวลาเดินทางประมาณ 45 - 50 นาที'
-                    },
-                    {
-                        id: 'd2-8',
-                        time: '17:15 น. เป็นต้นไป',
                         emoji: '🌊',
-                        title: 'เช็คอินเข้าสู่ที่พักคืนที่สอง Zensala Riverpark Resort (ถนนป่าตัน ตำบลป่าตัน อำเภอเมืองเชียงใหม่)',
-                        category: 'เช็คอินที่พักคืนที่ 2',
-                        catStyle: 'bg-teal-100 text-teal-800',
-                        mapQuery: 'Zensala Riverpark Resort Chiang Mai',
-                        desc: 'พักผ่อนในรีสอร์ตหรูระดับ 5 ดาวริมแม่น้ำปิง ชมวิวพระอาทิตย์ตกริมน้ำ และรับประทานอาหารค่ำในบรรยากาศสุดผ่อนคลาย (ฝ่ายต้อนรับเปิดให้บริการถึงเวลา 22:00 น.)'
+                        title: 'ขับรถกลับเชียงใหม่และเช็กอิน Zensala Riverpark Resort',
+                        distance: 'ระยะทาง 35 กิโลเมตร',
+                        category: 'เช็กอินที่พักคืนที่ 2',
+                        catStyle: 'bg-skyPastel-bg text-skyPastel-text',
+                        mapQuery: 'Zensala Riverpark Resort 168 ป่าตัน เชียงใหม่',
+                        desc: 'เข้าพักรีสอร์ตบรรยากาศเงียบสงบริมแม่น้ำปิงย่านป่าตัน พักผ่อนและทานมื้อค่ำริมน้ำ',
+                        noteTitle: '🛎️ หมายเหตุเวลาเช็กอิน Zensala Riverpark Resort',
+                        noteText: 'แผนกต้อนรับของรีสอร์ตเปิดให้บริการถึงเวลา 22:00 น. การกลับมาเช็กอินช่วงเวลา 17:15 น. กำลังพอดีและได้ชมบรรยากาศริมแม่น้ำปิงยามเย็นด้วยค่ะ'
                     }
                 ]
             },
             {
                 dayId: 'day3',
-                dayNumber: 'วันที่ 3 ของการเดินทาง',
+                dayNumber: 'วันที่ 3',
                 dateText: 'วันเสาร์ที่ 28 พฤศจิกายน 2026',
-                emoji: '🌿🎨🌅',
-                title: 'ชมวัดไม้โบราณวัดต้นเกว๋น เดินเล่นหมู่บ้านงานคราฟต์บ้านข้างวัด และชมแสงเย็นอ่างแก้ว มหาวิทยาลัยเชียงใหม่',
-                subtitle: 'เส้นทาง: Zensala Riverpark Resort ➔ วัดอินทราวาส (วัดต้นเกว๋น) ➔ 99 คาเฟ่เชียงใหม่ ➔ บ้านข้างวัด (และ Joogarood Cafe) ➔ Wintree City Resort Chiang Mai ➔ อ่างแก้ว มหาวิทยาลัยเชียงใหม่',
-                themeBg: 'bg-[#E6F4EA]',
-                themeBorder: 'border-[#C8E6C9]',
-                themeText: 'text-[#2E7D32]',
+                emoji: '🏯🍵🦢',
+                title: 'วัดไม้โบราณ - คาเฟ่ฮอปปิ้ง - แสงเย็นสวนสาธารณะองค์การบริหารส่วนจังหวัดเชียงใหม่',
+                subtitle: 'Zensala Riverpark Resort ➔ วัดต้นเกว๋น ➔ 99 คาเฟ่เชียงใหม่ ➔ บ้านข้างวัด ➔ The Baristro Asian Style ➔ Joogarood cafe ➔ สวนอบจ.เชียงใหม่ ➔ Wintree City Resort Chiang Mai',
+                themeBg: 'bg-matcha-bg',
+                themeBorder: 'border-matcha-border',
+                themeText: 'text-matcha-text',
                 items: [
                     {
                         id: 'd3-1',
-                        time: '07:30 - 08:45 น.',
+                        time: '07:30 น.',
                         emoji: '🍳',
-                        title: 'ตื่นนอน รับประทานอาหารเช้าริมแม่น้ำปิง และเช็คเอาต์ออกจาก Zensala Riverpark Resort',
-                        category: 'มื้อเช้าและเช็คเอาต์',
-                        catStyle: 'bg-amber-100 text-amber-800',
-                        desc: 'ดื่มด่ำบรรยากาศยามเช้าริมแม่น้ำปิง รับประทานอาหารเช้า และดำเนินการเช็คเอาต์ก่อนเวลา 08:45 น.'
+                        title: 'ตื่นนอนและทานอาหารเช้าริมน้ำที่ Zensala Riverpark Resort',
+                        category: 'มื้อเช้าริมแม่น้ำปิง',
+                        catStyle: 'bg-butter-bg text-amber-900',
+                        desc: 'ทานอาหารเช้าพร้อมวิวแม่น้ำปิงและจัดเก็บกระเป๋าเตรียมเช็กเอาต์'
                     },
                     {
                         id: 'd3-2',
-                        time: '08:45 - 09:30 น.',
+                        time: '08:45 น.',
                         emoji: '🛣️',
-                        title: 'ขับรถจากย่านป่าตัน มุ่งหน้าสู่อำเภอหางดง (ระยะทางประมาณ 17 กิโลเมตร)',
-                        category: 'ขับรถ 17 กิโลเมตร',
-                        catStyle: 'bg-emerald-100 text-emerald-800',
-                        desc: 'ขับไปตามถนนวงแหวนรอบกลางหรือถนนเลียบคลองชลประทาน เส้นทางขับง่ายและรถไม่ติด ใช้เวลาเดินทางประมาณ 25 - 30 นาที'
+                        title: 'เช็กเอาต์และขับรถไปอำเภอหางดง',
+                        distance: 'ระยะทาง 17 กิโลเมตร',
+                        category: 'ขับรถ 25 - 30 นาที',
+                        catStyle: 'bg-skyPastel-bg text-skyPastel-text',
+                        desc: 'ใช้เส้นทางถนนวงแหวนหรือเลียบคลองชลประทาน เส้นทางสะดวก ใช้เวลาประมาณ 25 - 30 นาที'
                     },
                     {
                         id: 'd3-3',
-                        time: '09:30 - 11:15 น.',
+                        time: '09:15 - 10:45 น.',
                         emoji: '🏯',
-                        title: 'เยี่ยมชมและถ่ายภาพสถาปัตยกรรมล้านนาโบราณที่ วัดอินทราวาส (วัดต้นเกว๋น) อำเภอหางดง',
-                        category: 'วัดไม้โบราณยอดฮิต',
-                        catStyle: 'bg-amber-100 text-amber-900',
-                        mapQuery: 'วัดอินทราวาส วัดต้นเกว๋น เชียงใหม่',
-                        desc: 'ชมความงดงามสุดคลาสสิกของวิหารไม้และศาลาจตุรมุขไม้สักโบราณท่ามกลางต้นตาลสูงใหญ่ ซึ่งเป็นสถานที่ถ่ายทำละครและจุดถ่ายภาพชุดล้านนายอดนิยม',
-                        noteTitle: '📸 สิ่งที่ต้องเตรียมและทริคถ่ายภาพที่วัดต้นเกว๋น',
-                        noteText: 'วัดเปิดให้เข้าชมตั้งแต่เวลา 06:00 - 17:00 น. การเดินทางมาถึงช่วงเวลา 09:30 น. จะได้แสงแดดยามเช้าที่ส่องลอดศาลาไม้จตุรมุขสวยงามมาก และกรุ๊ปทัวร์ยังไม่เยอะ • หากต้องการเช่าชุดพื้นเมืองล้านนา (ชุดกาสะลอง) บริเวณหน้าวัดมีร้านให้บริการเช่าชุดพร้อมทำผมและร่มกระดาษในราคาประมาณ 140 - 150 บาท'
+                        title: 'วัดอินทราวาส (วัดต้นเกว๋น)',
+                        category: 'วัดไม้โบราณล้านนา',
+                        catStyle: 'bg-peach-bg text-peach-text',
+                        mapQuery: 'วัดอินทราวาส วัดต้นเกว๋น หางดง เชียงใหม่',
+                        desc: 'ถ่ายรูปสถาปัตยกรรมล้านนาโบราณ ศาลาไม้จตุรมุข และวิหารไม้คลาสสิก',
+                        noteTitle: '📸 โน้ตเตรียมตัววัดต้นเกว๋น',
+                        noteText: 'วัดเปิดเวลา 06:00 - 17:00 น. ช่วงเช้าแสงลอดผ่านศาลาไม้จตุรมุขสวยมากและนักท่องเที่ยวยังไม่หนาแน่น • บริเวณหน้าวัดมีร้านเช่าชุดล้านนาพร้อมร่มกระดาษราคาประมาณ 140 - 150 บาท'
                     },
                     {
                         id: 'd3-4',
-                        time: '11:30 - 13:00 น.',
+                        time: '11:00 - 12:15 น.',
                         emoji: '🍽️',
-                        title: 'รับประทานอาหารกลางวันและเครื่องดื่มที่ร้าน 99 คาเฟ่เชียงใหม่ (ระยะทางประมาณ 6.8 กิโลเมตร จากวัดต้นเกว๋น)',
-                        category: 'มื้อกลางวันและคาเฟ่',
-                        catStyle: 'bg-orange-100 text-orange-800',
+                        title: '99 คาเฟ่เชียงใหม่',
+                        distance: 'ระยะทาง 6.8 กิโลเมตร',
+                        category: 'มื้อกลางวันและเครื่องดื่ม',
+                        catStyle: 'bg-butter-bg text-amber-900',
                         mapQuery: '99 คาเฟ่เชียงใหม่',
-                        desc: 'ขับรถย้อนกลับขึ้นมาทางโซนตำบลสุเทพ - วัดอุโมงค์ แวะพักรับประทานอาหารกลางวันและจิบเครื่องดื่มเย็นๆ เติมพลัง'
+                        desc: 'แวะพักทานมื้อกลางวันและเครื่องดื่มเย็นๆ ระหว่างทางเข้าสู่โซนวัดอุโมงค์'
                     },
                     {
                         id: 'd3-5',
-                        time: '13:15 - 15:00 น.',
+                        time: '12:25 - 13:45 น.',
                         emoji: '🎨',
-                        title: 'เดินเล่นชมหมู่บ้านศิลปะที่ บ้านข้างวัด (ระยะทาง 1.7 กิโลเมตร) และตัวเลือกเสริมร้าน Joogarood Cafe (ระยะทาง 2.3 กิโลเมตร)',
-                        category: 'คอมมูนิตี้และงานคราฟต์',
-                        catStyle: 'bg-purple-100 text-purple-800',
+                        title: 'บ้านข้างวัด',
+                        distance: 'ระยะทาง 1.7 กิโลเมตร',
+                        category: 'หมู่บ้านศิลปะและงานคราฟต์',
+                        catStyle: 'bg-lavender-bg text-lavender-text',
                         mapQuery: 'บ้านข้างวัด เชียงใหม่',
-                        desc: 'เดินชมงานแฮนด์เมด ร้านเซรามิก ร้านหนังสืออิสระ และมุมถ่ายภาพบ้านไม้กึ่งปูนเปลือยใต้ร่มไม้ใหญ่ที่โครงการบ้านข้างวัด',
-                        noteTitle: '✨ เหตุผลการปรับตารางช่วงบ่าย (ยืดหยุ่นได้ตามความเหนื่อย)',
-                        noteText: 'ภายในโครงการบ้านข้างวัดมีร้านกาแฟและมุมถ่ายภาพจำนวนมาก หากเดินเที่ยวเสร็จแล้วยังมีแรงเหลือ สามารถแวะไปถ่ายภาพต่อที่ร้าน Joogarood Cafe (ระยะทาง 2.3 กิโลเมตร) ได้ตามแพลนเดิม แต่หากต้องการเวลาพักผ่อนมากขึ้น สามารถข้าม Joogarood Cafe แล้วขับรถไปเช็คอินเข้าโรงแรมระดับ 5 ดาวเพื่อว่ายน้ำและพักผ่อนก่อนไปอ่างแก้วได้เลยค่ะ'
+                        desc: 'เดินเล่นถ่ายรูปหมู่บ้านศิลปะ ชมร้านงานคราฟต์ ร้านเซรามิก และสินค้าทำมือสุดน่ารักใต้ร่มไม้'
                     },
                     {
                         id: 'd3-6',
-                        time: '15:15 - 16:30 น.',
-                        emoji: '🏨',
-                        title: 'เช็คอินเข้าสู่ที่พักคืนที่สาม Wintree City Resort Chiang Mai (ถนนเชียงใหม่-ลำปาง ตำบลช้างเผือก)',
-                        category: 'เช็คอินที่พักคืนที่ 3',
-                        catStyle: 'bg-sky-100 text-sky-800',
-                        mapQuery: 'Wintree City Resort Chiang Mai',
-                        desc: 'เข้าเช็คอินที่โรงแรมระดับ 5 ดาว ลานจอดรถกว้างขวางมาก เก็บสัมภาระและพักผ่อนริมสระว่ายน้ำก่อนออกไปชมแสงเย็น'
+                        time: '14:00 - 15:00 น.',
+                        emoji: '🍵',
+                        title: 'The Baristro Asian Style',
+                        distance: 'ระยะทาง 2.2 กิโลเมตร',
+                        category: 'คาเฟ่เอเชียนมินิมอล',
+                        catStyle: 'bg-matcha-bg text-matcha-text',
+                        mapQuery: 'The Baristro Asian Style Chiang Mai',
+                        desc: 'คาเฟ่สไตล์เอเชียนมินิมอลโทนไม้และสวนหินญี่ปุ่น มีมุมถ่ายรูปเยอะมาก',
+                        noteTitle: '🎟️ โน้ตค่าเข้าชม The Baristro Asian Style',
+                        noteText: 'มีค่าเข้าชม 80 บาท สามารถนำไปใช้เป็นส่วนลดค่าเครื่องดื่มภายในร้านได้เต็มจำนวน 80 บาทเลยค่ะ'
                     },
                     {
                         id: 'd3-7',
-                        time: '16:45 - 18:15 น.',
-                        emoji: '🌅',
-                        title: 'เดินเล่นรับลมหนาวและชมแสงเย็นที่ อ่างแก้ว มหาวิทยาลัยเชียงใหม่ (ระยะทางจากโรงแรมประมาณ 10 - 15 นาที)',
-                        category: 'ไฮไลต์แสงเย็น Golden Hour',
-                        catStyle: 'bg-amber-100 text-amber-800',
-                        mapQuery: 'อ่างแก้ว มหาวิทยาลัยเชียงใหม่',
-                        desc: 'เดินเล่นบนสันเขื่อนอ่างเก็บน้ำอ่างแก้ว ชมวิวทิวทัศน์ของดอยสุเทพที่สะท้อนผิวน้ำและบรรยากาศนักศึกษาพาสุนัขมาเดินเล่นยามเย็น',
-                        noteTitle: '🐕 ทริคเวลาถ่ายภาพและจุดจอดรถที่อ่างแก้ว มหาวิทยาลัยเชียงใหม่',
-                        noteText: 'ช่วงเวลา 17:00 - 17:45 น. เป็นช่วงแสงสีทอง (Golden Hour) ที่สวยงามที่สุดของอ่างแก้ว แนะนำให้ปักหมุดนำทางไปจอดรถที่ลานจอดรถด้านข้างอ่างแก้ว หรือบริเวณหน้าคณะรัฐศาสตร์ มหาวิทยาลัยเชียงใหม่ แล้วเดินขึ้นเนินสันเขื่อน'
+                        time: '15:00 - 15:45 น.',
+                        emoji: '🧋',
+                        title: 'Joogarood cafe',
+                        distance: 'ระยะทาง 110 เมตร',
+                        category: 'คาเฟ่ใกล้กันเดินถึง',
+                        catStyle: 'bg-peach-bg text-peach-text',
+                        mapQuery: 'Joogarood cafe Chiang Mai',
+                        desc: 'อยู่ใกล้มากเพียง 110 เมตร สามารถเดินต่อจาก The Baristro Asian Style ได้เลยโดยไม่ต้องขยับรถ',
+                        noteTitle: '💡 หมายเหตุสำคัญ',
+                        noteText: 'หากแวะไปร้าน Joogarood cafe ตั้งแต่วันที่ 1 แล้ว สามารถข้ามจุดนี้และขับรถไปเดินเล่นที่สวนสาธารณะองค์การบริหารส่วนจังหวัดเชียงใหม่ให้เร็วขึ้นได้เลยค่ะ'
                     },
                     {
                         id: 'd3-8',
-                        time: '18:30 น. เป็นต้นไป',
-                        emoji: '🍲',
-                        title: 'รับประทานอาหารค่ำย่านถนนนิมมานเหมินทร์ หรือย่านหลังมหาวิทยาลัยเชียงใหม่',
-                        category: 'มื้อค่ำวันเสาร์',
-                        catStyle: 'bg-rose-100 text-rose-800',
-                        mapQuery: 'One Nimman Chiang Mai',
-                        desc: 'เลือกรับประทานอาหารเหนือหรือร้านอาหารอร่อยๆ ย่านนิมมานเหมินทร์ จากนั้นขับรถกลับเข้าพักผ่อนที่โรงแรม Wintree City Resort Chiang Mai'
+                        time: '16:00 - 17:45 น.',
+                        emoji: '🦢',
+                        title: 'สวนสาธารณะองค์การบริหารส่วนจังหวัดเชียงใหม่ และ สวนเฉลิมพระเกียรติฯ องค์การบริหารส่วนจังหวัดเชียงใหม่',
+                        distance: 'ระยะทาง 6.3 - 6.9 กิโลเมตร',
+                        category: 'ไฮไลต์แสงเย็น Golden Hour',
+                        catStyle: 'bg-matcha-bg text-matcha-text',
+                        mapQuery: 'สวนสาธารณะ อบจ.เชียงใหม่ สวนเฉลิมพระเกียรติ 82 พรรษา',
+                        desc: 'พื้นที่สวนผืนใหญ่เชื่อมต่อกัน แนะนำช่วงเวลา 16:30 - 17:45 น. ซึ่งเป็นช่วงแสงเย็น (Golden Hour) แดดร่มลมตก ถ่ายรูปวิวดอยสุเทพสะท้อนผิวน้ำและฝูงห่านได้ฟีลต่างประเทศสุดๆ'
+                    },
+                    {
+                        id: 'd3-9',
+                        time: '18:00 น.',
+                        emoji: '🏨',
+                        title: 'เช็กอิน Wintree City Resort Chiang Mai',
+                        distance: 'ระยะทาง 4.9 กิโลเมตร',
+                        category: 'เช็กอินที่พักคืนที่ 3',
+                        catStyle: 'bg-skyPastel-bg text-skyPastel-text',
+                        mapQuery: 'Wintree City Resort Chiang Mai 72 ถนนเชียงใหม่-ลำปาง',
+                        desc: 'ขับรถจากสวนมาโรงแรมเพียง 10 นาที เช็กอินเข้าพักโรงแรมระดับ 5 ดาว ที่จอดรถกว้างขวาง จากนั้นออกไปทานมื้อเย็นหรือพักผ่อนในโรงแรม'
                     }
                 ]
             },
             {
                 dayId: 'day4',
-                dayNumber: 'วันที่ 4 ของการเดินทาง',
+                dayNumber: 'วันที่ 4',
                 dateText: 'วันอาทิตย์ที่ 29 พฤศจิกายน 2026',
-                emoji: '🦢🍰🛫',
-                title: 'รับลมหนาวเช้าตรู่ที่สวนสาธารณะองค์การบริหารส่วนจังหวัดเชียงใหม่ แวะคาเฟ่ส่งท้าย และบินกลับกรุงเทพมหานคร',
-                subtitle: 'เส้นทาง: Wintree City Resort Chiang Mai ➔ สวนสาธารณะองค์การบริหารส่วนจังหวัดเชียงใหม่ ➔ บุฟเฟต์โรงแรม ➔ Rich Mellow ➔ เติมน้ำมัน & คืนรถ AVIS ➔ ท่าอากาศยานนานาชาติเชียงใหม่',
-                themeBg: 'bg-[#EBF5FF]',
-                themeBorder: 'border-[#BBDEFB]',
-                themeText: 'text-[#1565C0]',
+                emoji: '🧺⛽🛫',
+                title: 'จริงใจมาร์เก็ต เชียงใหม่ - คืนรถเช่า AVIS - บินกลับกรุงเทพมหานคร',
+                subtitle: 'Wintree City Resort Chiang Mai ➔ จริงใจมาร์เก็ต เชียงใหม่ ➔ มื้อกลางวันและซื้อของฝาก ➔ เติมน้ำมันและคืนรถ AVIS ➔ เที่ยวบินกลับ 15:50 น.',
+                themeBg: 'bg-skyPastel-bg',
+                themeBorder: 'border-skyPastel-border',
+                themeText: 'text-skyPastel-text',
                 items: [
                     {
                         id: 'd4-1',
-                        time: '07:00 น.',
-                        emoji: '🌤️',
-                        title: 'ตื่นนอนตอนเช้าเพื่อเตรียมตัวไปรับอากาศเย็นและแสงเช้าที่สวนสาธารณะ',
-                        category: 'เตรียมตัวตอนเช้า',
-                        catStyle: 'bg-sky-100 text-sky-800',
-                        desc: 'ล้างหน้าแต่งตัวออกไปถ่ายภาพแสงเช้าตรู่ก่อนที่แดดจะแรง แล้วค่อยกลับมาอาบน้ำและรับประทานบุฟเฟต์อาหารเช้าที่โรงแรม'
+                        time: '07:30 น.',
+                        emoji: '🥞',
+                        title: 'ตื่นนอนและทานบุฟเฟต์อาหารเช้าที่ Wintree City Resort Chiang Mai',
+                        category: 'บุฟเฟต์อาหารเช้าโรงแรม',
+                        catStyle: 'bg-butter-bg text-amber-900',
+                        desc: 'ทานอาหารเช้าให้เต็มอิ่มและพักผ่อนสบายๆ ในเช้าวันสุดท้ายที่เชียงใหม่'
                     },
                     {
                         id: 'd4-2',
-                        time: '07:30 - 09:00 น.',
-                        emoji: '🦢',
-                        title: 'เดินเล่นและถ่ายภาพที่ สวนสาธารณะองค์การบริหารส่วนจังหวัดเชียงใหม่ (สวนเฉลิมพระเกียรติฯ 82 พรรษา)',
-                        category: 'จุดถ่ายภาพฟีลต่างประเทศ',
-                        catStyle: 'bg-emerald-100 text-emerald-800',
-                        mapQuery: 'สวนสาธารณะ อบจ.เชียงใหม่',
-                        desc: 'ตั้งอยู่บริเวณด้านหลังศาลากลางจังหวัดเชียงใหม่ ระยะทางห่างจากโรงแรม Wintree City Resort Chiang Mai เพียงประมาณ 4.6 กิโลเมตร (ใช้เวลาขับรถเพียง 5 - 8 นาที)',
-                        noteTitle: '✨ เหตุผลการปรับตาราง (รวม 2 จุดในพื้นที่เดียวกัน และไปรับแสงเช้า)',
-                        noteText: 'ทั้ง "สวนสาธารณะองค์การบริหารส่วนจังหวัดเชียงใหม่" และ "สวนเฉลิมพระเกียรติฯ องค์การบริหารส่วนจังหวัดเชียงใหม่" คือพื้นที่สวนขนาดใหญ่ผืนเดียวกันที่เชื่อมต่อกัน (ระยะทางภายในสวนประมาณ 1 กิโลเมตร) การมาเดินถ่ายภาพช่วงเวลา 07:30 - 08:30 น. จะได้สัมผัสอากาศหนาวสดชื่น แสงแดดอ่อนๆ สะท้อนผิวน้ำเห็นวิวดอยสุเทพเป็นฉากหลัง และได้ชมฝูงห่านออกมาเดินเล่นบนสนามหญ้าสีเขียว ให้บรรยากาศเหมือนอยู่ต่างประเทศโดยไม่ร้อนแดดเลยค่ะ'
+                        time: '09:00 - 11:15 น.',
+                        emoji: '🧺',
+                        title: 'จริงใจมาร์เก็ต เชียงใหม่ (Jing Jai Market)',
+                        category: 'ตลาดนัดสุดสัปดาห์',
+                        catStyle: 'bg-matcha-bg text-matcha-text',
+                        mapQuery: 'จริงใจมาร์เก็ต เชียงใหม่ Jing Jai Market',
+                        desc: 'ตลาดนัดสุดสัปดาห์ (เปิดวันเสาร์ - วันอาทิตย์ เวลา 06:30 - 15:00 น.) ห่างจากโรงแรมเพียง 10 - 15 นาที เดินชิลถ่ายรูป ช้อปงานแฮนด์เมด ผักผลไม้ออร์แกนิก และจิบกาแฟคราฟต์ในบรรยากาศอากาศเย็นสบาย',
+                        noteTitle: '💡 ทริคประหยัดเวลาวันสุดท้าย',
+                        noteText: 'หากเก็บกระเป๋าเช็กเอาต์ออกจากโรงแรมตอนเวลา 09:30 น. เลย จะสามารถขับไปจริงใจมาร์เก็ตแล้วเที่ยวต่อยาวๆ โดยไม่ต้องขับรถย้อนกลับโรงแรมอีกครั้งค่ะ'
                     },
                     {
                         id: 'd4-3',
-                        time: '09:15 - 11:00 น.',
-                        emoji: '🥞',
-                        title: 'ขับรถกลับมาที่โรงแรม Wintree City Resort Chiang Mai เพื่อรับประทานบุฟเฟต์อาหารเช้า อาบน้ำ และจัดเก็บกระเป๋า',
-                        category: 'อาหารเช้าโรงแรม',
-                        catStyle: 'bg-amber-100 text-amber-800',
-                        desc: 'รับประทานอาหารเช้าของโรงแรมให้เต็มอิ่ม อาบน้ำเปลี่ยนเสื้อผ้า และจัดเก็บสัมภาระลงกระเป๋าเดินทางให้เรียบร้อย'
+                        time: '11:30 - 12:00 น.',
+                        emoji: '🧳',
+                        title: 'เช็กเอาต์จาก Wintree City Resort Chiang Mai (ก่อนเวลา 12:00 น.)',
+                        category: 'เช็กเอาต์ที่พักคืนสุดท้าย',
+                        catStyle: 'bg-slate-100 text-slate-700',
+                        mapQuery: 'Wintree City Resort Chiang Mai',
+                        desc: 'ตรวจสอบสัมภาระและของมีค่าในห้องพักให้ครบถ้วนก่อนคืนคีย์การ์ด'
                     },
                     {
                         id: 'd4-4',
-                        time: '11:30 น.',
-                        emoji: '🧳',
-                        title: 'ดำเนินการเช็คเอาต์ออกจากโรงแรม Wintree City Resort Chiang Mai (กำหนดเช็คเอาต์ก่อนเวลา 12:00 น.)',
-                        category: 'เช็คเอาต์ที่พักคืนสุดท้าย',
-                        catStyle: 'bg-slate-100 text-slate-700',
-                        desc: 'ตรวจสอบทรัพย์สินและสิ่งของมีค่าภายในห้องพัก คืนคีย์การ์ด และนำกระเป๋าขึ้นรถเช่า'
+                        time: '12:00 - 13:15 น.',
+                        emoji: '🛍️',
+                        title: 'ทานมื้อกลางวันส่งท้ายและแวะซื้อของฝากเชียงใหม่',
+                        category: 'มื้อกลางวันและของฝาก',
+                        catStyle: 'bg-peach-bg text-peach-text',
+                        mapQuery: 'ตลาดต้นพยอม ของฝากเชียงใหม่',
+                        desc: 'ซื้อไส้อั่ว น้ำพริกหนุ่ม แคบหมู หรือแวะคาเฟ่ส่งท้ายในตัวเมืองก่อนมุ่งหน้าไปท่าอากาศยานนานาชาติเชียงใหม่'
                     },
                     {
                         id: 'd4-5',
-                        time: '11:45 - 13:30 น.',
-                        emoji: '🍰',
-                        title: 'แวะคาเฟ่และรับประทานอาหารกลางวันส่งท้ายที่ร้าน Rich Mellow (ระยะทางประมาณ 5 กิโลเมตร) พร้อมแวะซื้อของฝาก',
-                        category: 'คาเฟ่ส่งท้ายและของฝาก',
-                        catStyle: 'bg-orange-100 text-orange-800',
-                        mapQuery: 'Rich Mellow Chiang Mai',
-                        desc: 'รับประทานอาหารกลางวัน ขนมเค้กโฮมเมด และเครื่องดื่มที่ร้าน Rich Mellow และสามารถแวะซื้อของฝากขึ้นชื่อของเชียงใหม่ เช่น ไส้อั่ว น้ำพริกหนุ่ม แคบหมู ในช่วงเวลานี้ได้ตามสะดวก'
+                        time: '13:15 - 13:45 น.',
+                        emoji: '⛽',
+                        title: 'แวะเติมน้ำมันเต็มถังก่อนคืนรถเช่า (Full-to-Full)',
+                        category: 'เติมน้ำมันเต็มถัง',
+                        catStyle: 'bg-rose-100 text-rose-800',
+                        mapQuery: 'ปั๊มน้ำมัน ถนนมหิดล ใกล้สนามบินเชียงใหม่',
+                        desc: 'แวะเติมน้ำมันให้เต็มถังที่ปั๊มน้ำมันใกล้ท่าอากาศยานนานาชาติเชียงใหม่ (เช่น ถนนมหิดล หรือแยกสนามบิน)',
+                        noteTitle: '🧾 อย่าลืมขอใบเสร็จค่าน้ำมัน!',
+                        noteText: 'ต้องเก็บใบเสร็จค่าน้ำมันไว้แสดงให้พนักงาน AVIS ดูตอนส่งมอบรถคืนที่สนามบินด้วยนะคะ'
                     },
                     {
                         id: 'd4-6',
-                        time: '13:30 - 14:00 น.',
-                        emoji: '⛽',
-                        title: 'ขับรถมุ่งหน้าสู่สนามบินเชียงใหม่ และแวะเติมน้ำมันรถยนต์ให้เต็มถัง (Full-to-Full)',
-                        category: 'เติมน้ำมันก่อนคืนรถ',
-                        catStyle: 'bg-rose-100 text-rose-800',
-                        mapQuery: 'ปั๊มน้ำมัน ถนนมหิดล เชียงใหม่',
-                        desc: 'ขับรถไปตามถนนซุปเปอร์ไฮเวย์ต่อเนื่องเข้าถนนมหิดล มุ่งหน้าสู่ท่าอากาศยานนานาชาติเชียงใหม่',
-                        noteTitle: '⛽ โน้ตสำคัญมากก่อนนำรถเช่าไปคืนบริษัท AVIS',
-                        noteText: 'ต้องแวะเติมน้ำมันรถยนต์ให้เต็มถัง (Full-to-Full) ที่สถานีบริการน้ำมันใกล้ท่าอากาศยานนานาชาติเชียงใหม่ (เช่น ปั๊มน้ำมันบนถนนมหิดล หรือบริเวณแยกสนามบิน) และอย่าลืมขอ "ใบเสร็จรับเงินค่าน้ำมัน" เก็บไว้แสดงให้เจ้าหน้าที่ AVIS ตรวจสอบตอนส่งมอบรถคืน'
+                        time: '13:45 - 14:15 น.',
+                        emoji: '🚗',
+                        title: 'คืนรถเช่าที่จุดรับคืนรถ AVIS ท่าอากาศยานนานาชาติเชียงใหม่',
+                        category: 'คืนรถเช่า AVIS',
+                        catStyle: 'bg-butter-bg text-amber-900',
+                        mapQuery: 'AVIS Rent A Car ท่าอากาศยานนานาชาติเชียงใหม่',
+                        desc: 'พนักงานตรวจสภาพรถและทำเรื่องยกเลิกการกันวงเงินมัดจำบัตรเครดิต Visa 6622 (วงเงินจะคืนเข้าบัตรภายใน 7 - 14 วันทำการ)'
                     },
                     {
                         id: 'd4-7',
-                        time: '14:00 - 14:30 น.',
-                        emoji: '🚗',
-                        title: 'นำรถเช่าไปคืนที่จุดรับคืนรถของบริษัท AVIS ณ ท่าอากาศยานนานาชาติเชียงใหม่',
-                        category: 'คืนรถเช่า AVIS',
-                        catStyle: 'bg-amber-100 text-amber-900',
-                        mapQuery: 'Chiang Mai International Airport',
-                        desc: 'ส่งมอบกุญแจและแสดงใบเสร็จค่าน้ำมันให้เจ้าหน้าที่ AVIS ตรวจเช็กสภาพรถและดำเนินการยกเลิกการกันวงเงินบัตรเครดิต (วงเงินมัดจำจะคืนเข้าบัตรเครดิตอัตโนมัติภายใน 7 - 14 วันทำการ)'
+                        time: '14:15 - 15:00 น.',
+                        emoji: '🛂',
+                        title: 'เข้าสู่อาคารผู้โดยสารขาออกภายในประเทศ ท่าอากาศยานนานาชาติเชียงใหม่',
+                        category: 'ขั้นตอนสนามบินขากลับ',
+                        catStyle: 'bg-skyPastel-bg text-skyPastel-text',
+                        mapQuery: 'ท่าอากาศยานนานาชาติเชียงใหม่ อาคารผู้โดยสารขาออกภายในประเทศ',
+                        desc: 'โหลดกระเป๋าใต้ท้องเครื่องให้เสร็จก่อนเวลา 15:05 น. (45 นาทีก่อนเครื่องออก) ผ่านจุดตรวจค้น และเดินไปยังประตูทางออกขึ้นเครื่อง (Gate)'
                     },
                     {
                         id: 'd4-8',
-                        time: '14:30 น.',
-                        emoji: '🛂',
-                        title: 'เดินเข้าสู่อาคารผู้โดยสาร โหลดกระเป๋าสัมภาระ และเข้าไปรอที่หน้าประตูขึ้นเครื่อง (Gate) ขาออกภายในประเทศ',
-                        category: 'ขั้นตอนสนามบินขากลับ',
-                        catStyle: 'bg-sky-100 text-sky-800',
-                        desc: 'โหลดกระเป๋าสัมภาระให้เสร็จก่อนเวลาเครื่องออกอย่างน้อย 45 นาที ผ่านจุดตรวจค้น และเดินเข้าสู่หน้าประตูขึ้นเครื่อง (เปิดเรียกขึ้นเครื่อง 30 - 40 นาทีก่อนเวลาบิน และประตูเครื่องปิด 15 - 20 นาทีก่อนเวลาเครื่องออก)'
+                        time: '15:10 น.',
+                        emoji: '📢',
+                        title: 'เรียกขึ้นเครื่อง (Boarding Time)',
+                        category: 'เตรียมขึ้นเครื่องบิน',
+                        catStyle: 'bg-peach-bg text-peach-text',
+                        desc: 'เตรียม E-Boarding Pass และบัตรประชาชนตัวจริง',
+                        noteTitle: '🚪 เวลาปิดประตูขึ้นเครื่องขากลับ (Gate Close)',
+                        noteText: 'ประตูทางออกขึ้นเครื่อง (Gate) ปิดเวลา 15:30 น. (20 นาทีก่อนเครื่องออก)'
                     },
                     {
                         id: 'd4-9',
-                        time: '16:00 - 17:20 น.',
+                        time: '15:50 - 16:55 น.',
                         emoji: '🌇',
-                        title: 'เดินทางกลับสู่กรุงเทพมหานครโดยสวัสดิภาพ พร้อมชมวิวพระอาทิตย์ตกดินจากที่นั่งแถวที่ 26 ฝั่งขวา',
-                        category: 'เที่ยวบินขากลับช่วงบ่ายแก่ๆ',
-                        catStyle: 'bg-indigo-100 text-indigo-800',
-                        desc: 'เดินทางกลับถึงสนามบินที่กรุงเทพมหานครโดยสวัสดิภาพ ปิดทริปเชียงใหม่ - ลำพูน 4 วัน 3 คืน อย่างมีความสุข',
-                        noteTitle: '🌅 ไฮไลต์ส่งท้ายทริปบนเครื่องบิน (ที่นั่งแถวที่ 26 ฝั่งขวา)',
-                        noteText: 'เที่ยวบินขากลับช่วงบ่ายแก่ๆ ถึงเย็นที่มุ่งหน้าลงทางทิศใต้ พระอาทิตย์จะคล้อยต่ำลงทางทิศตะวันตกเฉียงใต้ซึ่งอยู่ทางฝั่งขวาของเครื่องบินพอดี เตรียมกล้องหรือโทรศัพท์มือถือไว้ถ่ายภาพแสงสีส้มทองช่วงพระอาทิตย์ตกดินเหนือปุยเมฆสวยๆ ได้ตลอดทางเลยค่ะ!'
+                        title: 'เที่ยวบินตรง Thai AirAsia (ท่าอากาศยานนานาชาติเชียงใหม่ - ท่าอากาศยานดอนเมือง)',
+                        category: 'บินตรง 1 ชั่วโมง 5 นาที',
+                        catStyle: 'bg-lavender-bg text-lavender-text',
+                        desc: 'ใช้เวลาเดินทาง 1 ชั่วโมง 5 นาที นั่งที่นั่งแถว 26 ฝั่งขวา เดินทางกลับถึงกรุงเทพมหานครโดยสวัสดิภาพ!',
+                        noteTitle: '🌅 ไฮไลต์แสงพระอาทิตย์ตกดินช่วงเย็น',
+                        noteText: 'เตรียมกล้องหรือโทรศัพท์มือถือถ่ายรูปวิวแสงพระอาทิตย์ตกดินสีส้มทองช่วงบ่ายแก่ๆ เหนือปุยเมฆสวยๆ จากหน้าต่างที่นั่งแถว 26 ฝั่งขวาได้เลยค่ะ!'
                     }
                 ]
             }
         ];
 
         // =========================================================================
-        // 2. STATE MANAGEMENT (LOCALSTORAGE)
+        // 2. STATE MANAGEMENT (LOCALSTORAGE WITH TRY/CATCH ERROR HANDLING)
         // =========================================================================
         let checkedState = {};
         let currentDayFilter = 'all';
 
         function loadState() {
             try {
-                const raw = localStorage.getItem(STORAGE_KEY);
-                if (raw) {
-                    checkedState = JSON.parse(raw) || {};
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    checkedState = JSON.parse(saved) || {};
                 }
-            } catch (e) {
+            } catch (err) {
                 checkedState = {};
             }
         }
@@ -1246,8 +1435,8 @@
         function saveState() {
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedState));
-            } catch (e) {
-                // Ignore storage quota errors
+            } catch (err) {
+                // Gracefully ignore storage restrictions
             }
         }
 
@@ -1256,25 +1445,27 @@
             saveState();
             renderChecklist();
             renderTimeline(currentDayFilter);
-            updateOverallProgress();
+            updateProgressBars();
         }
 
         // =========================================================================
-        // 3. RENDER FUNCTIONS (FULL TEXT DISPLAY, ZERO TRUNCATION)
+        // 3. RENDER FUNCTIONS (FULL CONTENT, ZERO TRUNCATION)
         // =========================================================================
         function renderChecklist() {
             const container = document.getElementById('checklist-container');
-            let completedCount = 0;
+            if (!container) return;
+
+            let doneCount = 0;
 
             container.innerHTML = checklistData.map(item => {
                 const isDone = !!checkedState[item.id];
-                if (isDone) completedCount++;
+                if (isDone) doneCount++;
 
                 return `
-                    <label for="${item.id}" class="${isDone ? 'task-done bg-slate-50 border-slate-200' : 'bg-[#FDFBF7] border-emerald-200/80 hover:border-emerald-400'} border-2 rounded-3xl p-4 sm:p-5 flex items-start gap-3.5 cursor-pointer transition select-none">
+                    <label for="${item.id}" class="${isDone ? 'task-done bg-slate-50 border-slate-200' : 'bg-[#FDFBF7] border-matcha-border hover:border-emerald-400'} border-2 rounded-3xl p-4 sm:p-5 flex items-start gap-3.5 cursor-pointer transition select-none">
                         <input type="checkbox" id="${item.id}" ${isDone ? 'checked' : ''} onchange="toggleItemCheck('${item.id}')" class="mt-1.5 w-5 h-5 rounded-lg text-emerald-600 focus:ring-emerald-500 border-slate-300 cursor-pointer shrink-0">
-                        <div class="flex-1 task-content space-y-1.5">
-                            <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex-1 task-body space-y-1.5">
+                            <div>
                                 <span class="inline-flex items-center gap-1.5 text-xs font-cute font-bold px-3 py-0.5 rounded-full border ${item.badgeStyle}">
                                     <span>${item.emoji}</span>
                                     <span>${item.badge}</span>
@@ -1291,12 +1482,16 @@
                 `;
             }).join('');
 
-            document.getElementById('checklist-badge').textContent = `เตรียมแล้ว ${completedCount} / ${checklistData.length} รายการ`;
+            const badgeEl = document.getElementById('checklist-badge');
+            if (badgeEl) {
+                badgeEl.textContent = `เตรียมแล้ว ${doneCount} / ${checklistData.length} รายการ`;
+            }
         }
 
         function renderTimeline(filter = 'all') {
             currentDayFilter = filter;
             const container = document.getElementById('timeline-container');
+            if (!container) return;
 
             const daysToRender = filter === 'all'
                 ? itineraryDays
@@ -1310,17 +1505,24 @@
                     const isDone = !!checkedState[item.id];
                     const isLast = idx === day.items.length - 1;
 
+                    const distanceBadgeHtml = item.distance ? `
+                        <span class="inline-flex items-center gap-1 text-xs font-semibold text-slate-700 bg-slate-100 border border-slate-200 px-3 py-1 rounded-full">
+                            <i class="fa-solid fa-route text-slate-500"></i>
+                            <span>${item.distance}</span>
+                        </span>
+                    ` : '';
+
                     const mapBtnHtml = item.mapQuery ? `
-                        <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.mapQuery)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-800 bg-[#E6F4EA] hover:bg-emerald-200/70 border border-[#C8E6C9] px-3.5 py-1.5 rounded-xl transition no-print">
+                        <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.mapQuery)}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="inline-flex items-center gap-1.5 text-xs font-bold text-matcha-text bg-matcha-bg hover:bg-emerald-100 border border-matcha-border px-3.5 py-2 rounded-xl transition no-print">
                             <i class="fa-solid fa-location-dot text-emerald-600"></i>
                             <span>เปิดแผนที่ Google Maps</span>
                         </a>
                     ` : '';
 
                     const noteHtml = item.noteText ? `
-                        <div class="mt-3 p-4 rounded-2xl bg-[#FFF9DB]/80 border border-[#FFF59D] text-xs sm:text-sm text-slate-700 leading-relaxed">
-                            <div class="font-cute font-bold text-[#E65100] mb-1">
-                                ${item.noteTitle || '💡 โน้ตสำคัญ'}
+                        <div class="mt-3 p-4 rounded-2xl bg-butter-bg/75 border border-butter-border text-xs sm:text-sm text-slate-700 leading-relaxed">
+                            <div class="font-cute font-bold text-peach-text mb-1">
+                                ${item.noteTitle || '📌 โน้ตสำคัญ'}
                             </div>
                             <div>${item.noteText}</div>
                         </div>
@@ -1328,42 +1530,44 @@
 
                     return `
                         <div class="relative pl-8 sm:pl-11 ${isLast ? '' : 'pb-6'}">
-                            <!-- Vertical Connecting Line -->
-                            ${!isLast ? `<div class="absolute left-3.5 sm:left-4 top-8 bottom-0 w-0.5 ${isDone ? 'bg-emerald-400' : 'bg-amber-200'}"></div>` : ''}
+                            <!-- Vertical Timeline Line -->
+                            ${!isLast ? `<div class="absolute left-3.5 sm:left-4 top-9 bottom-0 w-0.5 ${isDone ? 'bg-emerald-400' : 'bg-amber-200'}"></div>` : ''}
 
-                            <!-- Cute Step Circle Button -->
-                            <button onclick="toggleItemCheck('${item.id}')" aria-label="เช็กสถานะ ${item.title}" class="absolute left-0 sm:left-0.5 top-1.5 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition shadow-2xs cursor-pointer ${isDone ? 'bg-emerald-500 text-white ring-4 ring-emerald-100' : 'bg-white border-2 border-amber-400 text-sm hover:border-emerald-500'}">
+                            <!-- Step Circle Check Button -->
+                            <button type="button" onclick="toggleItemCheck('${item.id}')" aria-label="เช็กอิน ${item.title}" class="absolute left-0 sm:left-0.5 top-1.5 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition shadow-2xs cursor-pointer ${isDone ? 'bg-emerald-500 text-white ring-4 ring-emerald-100' : 'bg-white border-2 border-amber-400 text-sm hover:border-emerald-500'}">
                                 ${isDone ? '<i class="fa-solid fa-check text-xs"></i>' : `<span>${item.emoji}</span>`}
                             </button>
 
                             <!-- Activity Card -->
                             <div class="${isDone ? 'task-done bg-slate-50/90 border-slate-200' : 'bg-white border-slate-200/90 hover:border-amber-300'} border-2 rounded-3xl p-4 sm:p-5 shadow-2xs transition">
-                                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-                                    <div class="flex flex-wrap items-center gap-2">
-                                        <span class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-amber-950 bg-[#FFF9DB] border border-amber-200 px-3 py-1 rounded-xl">
-                                            <i class="fa-regular fa-clock text-amber-700"></i>
-                                            <span>${item.time}</span>
-                                        </span>
-                                        <span class="inline-flex items-center gap-1 text-xs font-cute font-bold px-3 py-1 rounded-full ${item.catStyle}">
-                                            <span>${item.category}</span>
-                                        </span>
-                                    </div>
-
-                                    <div class="flex flex-wrap items-center gap-2">
-                                        ${mapBtnHtml}
-                                        <label class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-emerald-700 bg-slate-100 hover:bg-emerald-50 px-3 py-1.5 rounded-xl cursor-pointer select-none transition no-print">
-                                            <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleItemCheck('${item.id}')" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 cursor-pointer">
-                                            <span>เช็กอินแล้ว</span>
-                                        </label>
-                                    </div>
+                                <!-- Top Row: Time, Category, Distance -->
+                                <div class="flex flex-wrap items-center gap-2 mb-2.5">
+                                    <span class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-amber-950 bg-butter-bg border border-butter-border px-3 py-1 rounded-xl">
+                                        <i class="fa-regular fa-clock text-amber-700"></i>
+                                        <span>${item.time}</span>
+                                    </span>
+                                    <span class="inline-flex items-center text-xs font-cute font-bold px-3 py-1 rounded-full ${item.catStyle}">
+                                        ${item.category}
+                                    </span>
+                                    ${distanceBadgeHtml}
                                 </div>
 
-                                <div class="task-content">
+                                <!-- Body Content -->
+                                <div class="task-body">
                                     <h4 onclick="toggleItemCheck('${item.id}')" class="task-title text-base sm:text-lg font-bold text-slate-800 cursor-pointer leading-snug">
                                         ${item.title}
                                     </h4>
                                     ${item.desc ? `<p class="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">${item.desc}</p>` : ''}
                                     ${noteHtml}
+                                </div>
+
+                                <!-- Bottom Action Row: Google Maps + Check-in Checkbox -->
+                                <div class="mt-3.5 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 no-print">
+                                    <div>${mapBtnHtml}</div>
+                                    <label class="inline-flex items-center gap-2 text-xs font-bold ${isDone ? 'text-matcha-text bg-matcha-bg border-matcha-border' : 'text-slate-600 bg-slate-100 border-slate-200 hover:bg-emerald-50 hover:text-matcha-text'} border px-3.5 py-2 rounded-xl cursor-pointer select-none transition">
+                                        <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleItemCheck('${item.id}')" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 cursor-pointer">
+                                        <span>${isDone ? 'เช็กอินเรียบร้อยแล้ว' : 'ติ๊กถูกเมื่อถึงจุดนี้'}</span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -1371,20 +1575,20 @@
                 }).join('');
 
                 return `
-                    <article class="cute-card border-2 ${day.themeBorder} overflow-hidden">
-                        <!-- Day Pastel Header -->
-                        <div class="${day.themeBg} px-6 py-5 border-b ${day.themeBorder} flex flex-col md:flex-row md:items-center justify-between gap-4">
-                            <div class="space-y-1">
+                    <article id="day-section-${day.dayId}" class="cute-card border-2 ${day.themeBorder} overflow-hidden">
+                        <!-- Pastel Day Header -->
+                        <div class="${day.themeBg} px-5 sm:px-6 py-5 border-b ${day.themeBorder} flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div class="space-y-1.5">
                                 <div class="flex flex-wrap items-center gap-2">
                                     <span class="text-xl">${day.emoji}</span>
                                     <span class="font-cute font-bold text-xs sm:text-sm px-3 py-1 rounded-full bg-white ${day.themeText} border ${day.themeBorder}">
                                         ${day.dayNumber}
                                     </span>
-                                    <span class="text-xs sm:text-sm font-bold text-slate-700 bg-white/80 px-3 py-1 rounded-full">
+                                    <span class="text-xs sm:text-sm font-bold text-slate-800 bg-white/90 px-3 py-1 rounded-full">
                                         ${day.dateText}
                                     </span>
                                 </div>
-                                <h3 class="text-lg sm:text-xl font-bold text-slate-900 font-cute pt-1 leading-snug">
+                                <h3 class="text-lg sm:text-xl font-bold text-slate-900 font-cute leading-snug pt-0.5">
                                     ${day.title}
                                 </h3>
                                 <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
@@ -1392,14 +1596,14 @@
                                 </p>
                             </div>
 
-                            <div class="bg-white/90 px-4 py-2.5 rounded-2xl border ${day.themeBorder} text-center shrink-0 self-start md:self-center">
-                                <div class="text-[11px] font-medium text-slate-500">ความคืบหน้าของวันนี้</div>
+                            <div class="bg-white/95 px-4 py-2.5 rounded-2xl border ${day.themeBorder} text-center shrink-0 self-start md:self-center">
+                                <div class="text-[11px] font-medium text-slate-500">ความคืบหน้าของ${day.dayNumber}</div>
                                 <div class="text-sm sm:text-base font-cute font-bold ${day.themeText}">${dayDone} / ${dayTotal} กิจกรรม</div>
                             </div>
                         </div>
 
-                        <!-- Day Timeline Items -->
-                        <div class="p-5 sm:p-7">
+                        <!-- Day Items -->
+                        <div class="p-4 sm:p-7">
                             ${itemsHtml}
                         </div>
                     </article>
@@ -1407,7 +1611,7 @@
             }).join('');
         }
 
-        function updateOverallProgress() {
+        function updateProgressBars() {
             const totalChecklist = checklistData.length;
             const doneChecklist = checklistData.filter(c => !!checkedState[c.id]).length;
 
@@ -1421,65 +1625,118 @@
             const grandTotal = totalChecklist + totalTimeline;
             const grandDone = doneChecklist + doneTimeline;
             const pct = grandTotal > 0 ? Math.round((grandDone / grandTotal) * 100) : 0;
+            const labelText = `เสร็จสิ้นแล้ว ${grandDone} จาก ${grandTotal} รายการ (${pct}%)`;
 
-            document.getElementById('progress-text').textContent = `เสร็จสิ้นแล้ว ${grandDone} จาก ${grandTotal} รายการ (${pct}%)`;
-            document.getElementById('progress-bar').style.width = `${pct}%`;
+            // Update Hero Progress Bar
+            const heroText = document.getElementById('hero-progress-text');
+            const heroBar = document.getElementById('hero-progress-bar');
+            if (heroText) heroText.textContent = labelText;
+            if (heroBar) heroBar.style.width = `${pct}%`;
+
+            // Update Bottom Sheet Progress Bar
+            const sheetText = document.getElementById('sheet-progress-text');
+            const sheetBar = document.getElementById('sheet-progress-bar');
+            if (sheetText) sheetText.textContent = labelText;
+            if (sheetBar) sheetBar.style.width = `${pct}%`;
         }
 
         // =========================================================================
-        // 4. NAVIGATION, FILTER & CLIPBOARD HELPERS
+        // 4. DAY FILTER & BOTTOM SHEET DRAWER INTERACTIONS
         // =========================================================================
-        function switchMainSection(sec) {
-            const sections = {
-                bookings: document.getElementById('section-bookings'),
-                checklist: document.getElementById('section-checklist'),
-                itinerary: document.getElementById('section-itinerary')
-            };
-
-            // Update button active styles
-            const navIds = ['all', 'bookings', 'checklist', 'itinerary'];
-            navIds.forEach(id => {
-                const btn = document.getElementById(`nav-sec-${id}`);
-                if (id === sec) {
-                    btn.className = 'main-sec-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-bold transition cursor-pointer bg-amber-400 text-slate-900 shadow-xs';
-                } else {
-                    btn.className = 'main-sec-btn px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-semibold transition cursor-pointer bg-slate-50 text-slate-600 hover:bg-amber-50';
-                }
-            });
-
-            if (sec === 'all') {
-                sections.bookings.classList.remove('hidden');
-                sections.checklist.classList.remove('hidden');
-                sections.itinerary.classList.remove('hidden');
-            } else {
-                Object.keys(sections).forEach(k => {
-                    if (k === sec) {
-                        sections[k].classList.remove('hidden');
-                    } else {
-                        sections[k].classList.add('hidden');
-                    }
-                });
-            }
-        }
-
         function filterDay(dayId) {
             const pillIds = ['all', 'day1', 'day2', 'day3', 'day4'];
             pillIds.forEach(id => {
                 const btn = document.getElementById(`day-pill-${id}`);
+                if (!btn) return;
                 if (id === dayId) {
-                    btn.className = 'day-pill px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-bold transition cursor-pointer bg-[#FFF0EB] text-[#E65100] border border-[#FFCCBC] shadow-2xs';
+                    btn.className = 'day-pill px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-bold transition cursor-pointer bg-peach-bg text-peach-text border border-peach-border shadow-2xs';
                 } else {
-                    btn.className = 'day-pill px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-semibold transition cursor-pointer bg-slate-50 text-slate-600 hover:bg-amber-50 border border-transparent';
+                    btn.className = 'day-pill px-4 py-2 rounded-2xl text-xs sm:text-sm font-cute font-semibold transition cursor-pointer bg-slate-50 text-slate-600 hover:bg-butter-bg border border-transparent';
                 }
             });
             renderTimeline(dayId);
         }
 
+        function ensureAllDaysVisible() {
+            if (currentDayFilter !== 'all') {
+                filterDay('all');
+            }
+        }
+
+        function openBottomSheet() {
+            const wrapper = document.getElementById('bottom-sheet-wrapper');
+            const backdrop = document.getElementById('sheet-backdrop');
+            const panel = document.getElementById('sheet-panel');
+            if (!wrapper || !backdrop || !panel) return;
+
+            wrapper.classList.remove('hidden');
+            wrapper.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+
+            // Trigger transition on next frame
+            requestAnimationFrame(() => {
+                backdrop.classList.remove('opacity-0');
+                backdrop.classList.add('opacity-100');
+                panel.classList.remove('translate-y-full');
+                panel.classList.add('translate-y-0');
+            });
+        }
+
+        function closeBottomSheet() {
+            const wrapper = document.getElementById('bottom-sheet-wrapper');
+            const backdrop = document.getElementById('sheet-backdrop');
+            const panel = document.getElementById('sheet-panel');
+            if (!wrapper || !backdrop || !panel) return;
+
+            backdrop.classList.remove('opacity-100');
+            backdrop.classList.add('opacity-0');
+            panel.classList.remove('translate-y-0');
+            panel.classList.add('translate-y-full');
+            document.body.style.overflow = '';
+
+            setTimeout(() => {
+                wrapper.classList.add('hidden');
+                wrapper.setAttribute('aria-hidden', 'true');
+            }, 300);
+        }
+
+        function jumpToSection(sectionId) {
+            closeBottomSheet();
+            setTimeout(() => {
+                const target = document.getElementById(sectionId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 180);
+        }
+
+        function jumpToDay(dayId) {
+            ensureAllDaysVisible();
+            closeBottomSheet();
+            setTimeout(() => {
+                const target = document.getElementById(`day-section-${dayId}`);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 220);
+        }
+
+        function scrollToTopAndClose() {
+            closeBottomSheet();
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 180);
+        }
+
+        // =========================================================================
+        // 5. CLIPBOARD, TOAST & CUSTOM RESET MODAL
+        // =========================================================================
         function copyText(text, successMsg) {
             const textArea = document.createElement('textarea');
             textArea.value = text;
             textArea.style.position = 'fixed';
             textArea.style.left = '-9999px';
+            textArea.style.top = '0';
             document.body.appendChild(textArea);
             textArea.focus();
             textArea.select();
@@ -1487,7 +1744,7 @@
                 document.execCommand('copy');
                 showToast(successMsg || 'คัดลอกข้อมูลเรียบร้อยแล้วค่ะ!');
             } catch (err) {
-                showToast('ไม่สามารถคัดลอกได้ กรุณาคัดลอกด้วยตนเองนะคะ');
+                showToast('ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาคัดลอกด้วยตนเองนะคะ');
             }
             document.body.removeChild(textArea);
         }
@@ -1496,25 +1753,29 @@
         function showToast(message) {
             const toast = document.getElementById('toast');
             const msgEl = document.getElementById('toast-msg');
+            if (!toast || !msgEl) return;
+
             msgEl.textContent = message;
-            toast.classList.remove('translate-y-24', 'opacity-0');
+            toast.classList.remove('-translate-y-24', 'opacity-0');
             toast.classList.add('translate-y-0', 'opacity-100');
 
             if (toastTimer) clearTimeout(toastTimer);
             toastTimer = setTimeout(() => {
                 toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-24', 'opacity-0');
+                toast.classList.add('-translate-y-24', 'opacity-0');
             }, 2800);
         }
 
         function openResetModal() {
             const modal = document.getElementById('reset-modal');
+            if (!modal) return;
             modal.classList.remove('hidden');
             modal.classList.add('flex');
         }
 
         function closeResetModal() {
             const modal = document.getElementById('reset-modal');
+            if (!modal) return;
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
@@ -1524,17 +1785,29 @@
             saveState();
             renderChecklist();
             renderTimeline(currentDayFilter);
-            updateOverallProgress();
+            updateProgressBars();
             closeResetModal();
-            showToast('รีเซ็ตเช็กลิสต์ทั้งหมดกลับเป็นค่าเริ่มต้นแล้วค่ะ!');
+            showToast('รีเซ็ตเช็กลิสต์ทั้งหมดกลับเป็นค่าเริ่มต้นเรียบร้อยแล้วค่ะ!');
         }
 
-        // Initialize on Window Load
+        // Close drawer/modal with Escape key on desktop
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeBottomSheet();
+                closeResetModal();
+            }
+        });
+
+        // Initialize App on Window Load
         window.onload = function () {
-            loadState();
-            renderChecklist();
-            renderTimeline('all');
-            updateOverallProgress();
+            try {
+                loadState();
+                renderChecklist();
+                renderTimeline('all');
+                updateProgressBars();
+            } catch (error) {
+                console.error('Initialization error:', error);
+            }
         };
     </script>
 </body>
